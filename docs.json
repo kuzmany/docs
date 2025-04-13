@@ -44,6 +44,10 @@
   "navbar": {
     "links": [
       {
+        "label": "Plugins",
+        "href": "/plugins/plugins"
+      },
+      {
         "label": "Support",
         "href": "mailto:hi@mintlify.com"
       }
