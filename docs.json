@@ -50,9 +50,11 @@
         "tab": "Plugins",
         "groups": [
           {
-            "group": "Available Plugins",
+            "group": "Mautic Customizer Bundle",
             "pages": [
-              "plugins/mautic-customizer-bundle"
+              "plugins/mautic-customizer/introduction",
+              "plugins/mautic-customizer/documentation",
+              "plugins/mautic-customizer/examples"
             ]
           }
         ]
