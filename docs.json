@@ -12,6 +12,9 @@
     "tabs": [
       {
         "tab": "Plugins",
+        "pages": [
+          "plugins/introduction"
+        ],
         "groups": [
           {
             "group": "Mautic Customizer Bundle",
