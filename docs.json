@@ -25,6 +25,8 @@
       }
     ],
     "global": {
+      "anchors": ["plugins/plugins"],
+      "homepage": "index"
     }
   },
   "logo": {
