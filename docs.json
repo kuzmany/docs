@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "willow",
   "name": "Mint Starter Kit",
   "colors": {
     "primary": "#16A34A",
@@ -12,9 +12,6 @@
     "tabs": [
       {
         "tab": "Plugins",
-        "pages": [
-          "plugins/introduction"
-        ],
         "groups": [
           {
             "group": "Mautic Customizer Bundle",
