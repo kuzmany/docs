@@ -8,9 +8,31 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
+  "typography": {
+    "font": "Inter",
+    "headings": "Montserrat"
+  },
+  "modeToggle": {
+    "default": "dark"
+  },
   "favicon": "/favicon.svg",
   "styling": {
-    "eyebrows": "breadcrumbs"
+    "eyebrows": "breadcrumbs",
+    "headings": {
+      "fontSize": {
+        "h1": "2.5rem",
+        "h2": "2rem",
+        "h3": "1.5rem"
+      },
+      "fontWeight": {
+        "h1": "800",
+        "h2": "700",
+        "h3": "600"
+      },
+      "letterSpacing": {
+        "h1": "-0.02em"
+      }
+    }
   },
   "navigation": {
     "tabs": [
