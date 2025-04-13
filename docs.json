@@ -45,6 +45,17 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Plugins",
+        "groups": [
+          {
+            "group": "Available Plugins",
+            "pages": [
+              "plugins/mautic-customizer-bundle"
+            ]
+          }
+        ]
       }
     ],
     "global": {
