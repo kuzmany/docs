@@ -11,7 +11,26 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Home",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Homepage",
+              "href": "/index"
+            }
+          ]
+        }
+      },
+      {
         "tab": "Plugins",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Plugins Overview",
+              "href": "/plugins/plugins"
+            }
+          ]
+        },
         "groups": [
           {
             "group": "Mautic Customizer Bundle",
@@ -23,9 +42,7 @@
           }
         ]
       }
-    ],
-    "global": {
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
