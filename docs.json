@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "willow",
+  "theme": "mint",
   "name": "Mint Starter Kit",
   "colors": {
     "primary": "#16A34A",
@@ -11,35 +11,28 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Home",
+        "tab": "Tab 1",
         "global": {
           "anchors": [
             {
-              "anchor": "Homepage",
-              "href": "/index"
-            }
-          ]
-        }
-      },
-      {
-        "tab": "Plugins",
-        "global": {
-          "anchors": [
-            {
-              "anchor": "Plugins Overview",
-              "href": "/plugins/plugins"
+              "anchor": "Anchor 1",
+              "href": "https://mintlify.com/docs"
             }
           ]
         },
         "groups": [
           {
-            "group": "Mautic Customizer Bundle",
+            "group": " ",
             "pages": [
-              "plugins/mautic-customizer/introduction",
-              "plugins/mautic-customizer/documentation",
-              "plugins/mautic-customizer/examples"
+              "plugins/plugins"
             ]
           }
+        ]
+      },
+      {
+        "tab": "Tab 2",
+        "pages": [
+          "plugins/mautic-customizer/examples"
         ]
       }
     ]
