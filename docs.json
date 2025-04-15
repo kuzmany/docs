@@ -51,7 +51,14 @@
         "groups": [
           {
             "group": " ",
+            "pages": []
+          },
+          {
+            "group": "Twig Templates",
             "pages": [
+              "twig-templates/introduction",
+              "twig-templates/how-to-install",
+              "twig-templates/how-to-use"
             ]
           }
         ]
