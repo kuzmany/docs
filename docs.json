@@ -38,20 +38,12 @@
     "tabs": [
       {
         "tab": "Tab 1",
-        "global": {
-          "anchors": [
-            {
-              "anchor": "Welcome",
-              "pages": [
-                "index",
-              ]
-            }
-          ]
-        },
         "groups": [
           {
-            "group": " ",
-            "pages": []
+            "group": "Welcome",
+            "pages": [
+              "index"
+            ]
           },
           {
             "group": "Twig Templates",
