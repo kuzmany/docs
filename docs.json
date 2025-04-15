@@ -41,8 +41,10 @@
         "global": {
           "anchors": [
             {
-              "anchor": "Anchor 1",
-              "href": "https://mintlify.com/docs"
+              "anchor": "Welcome",
+              "pages": [
+                "index",
+              ]
             }
           ]
         },
@@ -50,7 +52,6 @@
           {
             "group": " ",
             "pages": [
-              "plugins/plugins"
             ]
           }
         ]
