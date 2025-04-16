@@ -5,23 +5,25 @@ description: Guide on how to effectively use Twig templates for Mautic personali
 
 Learn how to leverage Twig templates for customizing your Mautic experience. Twig provides a powerful yet simple syntax for adding logic directly into your Mautic assets.
 
-## Basic Example
+## Basic Example: Personalized Greeting
 
-Here's a simple example showing how to display different content based on a contact's custom field value (e.g., `affinity`):
+Here's a fundamental example showing how to greet a contact by their first name, with a fallback if the name isn't available:
 
 ```twig
-{% if contact.affinity == 'private' %}
-  <p>This is Private Content</p>
-{% elseif contact.affinity == 'b2b' %}
-  <p>This is B2B Content</p>
-{% elseif contact.affinity == 'agency' %}
-  <p>This is Agency Content</p>
+{# Check if the contact's firstname field has a value #}
+{% if contact.firstname %}
+  <p>Hello {{ contact.firstname }}!</p>
 {% else %}
-  <p>This is Default Content</p>
+  <p>Hello there!</p>
 {% endif %}
+
+{# A more concise way using the 'default' filter #}
+<p>Welcome, {{ contact.firstname|default('Valued Customer') }}!</p>
 ```
 
-This example demonstrates conditional logic based on the `affinity` field of the `contact` object.
+This example demonstrates:
+1.  Using an `if/else` block to check if `contact.firstname` exists.
+2.  Using the `default` filter as a shorthand to provide a fallback value directly within the output `{{ }}` tags.
 
 ## Learning Twig
 
