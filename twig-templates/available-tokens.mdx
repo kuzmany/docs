@@ -49,6 +49,14 @@ The `contact` object provides access to the fields of the contact viewing the em
         <p>Industry: {{ primary_company.companyindustry }}</p> {# Example custom field #}
     {% endif %}
     ```
+*   **Primary Company Shortcut (`contact.primaryCompany`):** Returns the primary company object if one is set. If no company is explicitly marked as primary, it returns the *first* company associated with the contact. Returns `null` if the contact has no associated companies.
+    ```twig
+    {% if contact.primaryCompany %}
+        <p>Primary/First Company Name: {{ contact.primaryCompany.companyname }}</p>
+    {% else %}
+        <p>No company associated.</p>
+    {% endif %}
+    ```
 
 ## Form Result Tokens
 
