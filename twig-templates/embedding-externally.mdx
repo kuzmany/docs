@@ -1,61 +1,70 @@
 ---
 title: Embedding on External Websites
 sidebarTitle: Embed Externally
-description: How to embed the output of your Mautic Twig Templates directly onto external websites or view them via a direct link.
+description: Show personalized Mautic content on your website or share it via a direct link using Twig Templates.
 ---
-import { Note } from '@mintlify/components';
+import { Card, CardGroup, Note, Steps } from '@mintlify/components';
 
-Beyond using Twig Templates within Mautic emails and landing pages, you can also embed their rendered output directly onto your external websites or access them through a unique URL. This allows you to leverage Mautic's personalization capabilities in other parts of your web presence.
+You can use your Mautic Twig Templates not just in emails and landing pages, but also directly on your own website or share them using a special link. This lets you put personalized Mautic content anywhere on the web.
 
-When you view a saved Twig Template in Mautic, you'll find options to "Embed Twig Template", providing you with the necessary code or links.
+Mautic provides two ways to do this when you view a saved Twig Template:
 
-## Javascript for Websites
+<CardGroup cols={1}>
+  <Card title="Embed with Javascript" icon="js">
+    <p>Add personalized Mautic content directly onto your website pages (like banners or messages). Mautic gives you a Javascript code snippet to paste into your site's HTML.</p>
 
-This method provides a Javascript snippet that you can place on any external webpage. When the page loads, this script will fetch and display the rendered output of your Twig Template. This is ideal for dynamically inserting personalized content blocks, banners, or messages onto your website, blog, or other web properties.
+    **How to Get the Code:**
+    <Steps>
+      <Step>Go to your saved Twig Template in Mautic.</Step>
+      <Step>Find and click the "Embed Twig Template" option.</Step>
+      <Step>Copy the Javascript code snippet provided.</Step>
+    </Steps>
 
-**How to Use:**
+    **Example Snippet:**
+    ```html
+    <!-- Paste this where you want the content on your page -->
+    <script async defer type="text/javascript"
+    src="https://your-mautic.com/twig/template/{TEMPLATE_ID}/{UNIQUE_HASH}.js"></script>
+    ```
 
-1.  Navigate to the Twig Template you want to embed within Mautic.
-2.  Find the "Embed Twig Template" option (often via a button or modal).
-3.  Copy the provided Javascript code snippet.
-4.  Paste this snippet into the HTML source code of your external webpage where you want the template's output to appear.
+    **How it Works:**
+    *   Paste the snippet into your website's HTML where you want the content to appear.
+    *   The script fetches and displays the Twig Template's output when the page loads.
+    *   Personalization is based on the visitor's Mautic tracking cookie. If the visitor is unknown, any default values or fallback logic in your template are used.
 
-**Example Snippet:**
+    <Note>
+      Remember to replace `https://your-mautic.com` with your Mautic URL. The `{TEMPLATE_ID}` and `{UNIQUE_HASH}` are unique to your template and provided by Mautic.
+    </Note>
+  </Card>
 
-```html
-<!-- Example Javascript embed code for a Twig Template -->
-<script async defer type="text/javascript"
-src="https://your-mautic.com/twig/template/{TEMPLATE_ID}/{UNIQUE_HASH}.js"></script>
-```
+  <Card title="Use Direct Link" icon="link">
+     <p>Get a unique URL that displays your rendered Twig Template as a standalone HTML page.</p>
 
-<Note>
-  Replace `https://your-mautic.com` with your actual Mautic instance URL. The `{TEMPLATE_ID}` and `{UNIQUE_HASH}` will be specific to the template you are embedding, as provided by Mautic.
-</Note>
+     **Useful For:**
+     *   Quickly previewing template output.
+     *   Embedding content using an `<iframe>` on another site.
+     *   Sharing a specific piece of personalized content directly.
 
-The content will be rendered based on the contact identified by the Mautic tracking cookie present in the visitor's browser. If the visitor is unknown, default values or fallback logic within your Twig template will be used.
+    **How to Get the Link:**
+    <Steps>
+        <Step>Go to your saved Twig Template in Mautic.</Step>
+        <Step>Find and click the "Embed Twig Template" option.</Step>
+        <Step>Copy the "Direct HTML link" provided.</Step>
+    </Steps>
 
-## Direct HTML Link
+    **Example Link:**
+    ```
+    https://your-mautic.com/twig/template/{TEMPLATE_ID}/{UNIQUE_HASH}.html
+    ```
 
-Mautic also provides a direct URL that renders the Twig Template as a standalone HTML page. This link can be useful for:
+    **How it Works:**
+    *   Anyone visiting this link will see the rendered HTML output of your Twig Template.
+    *   Personalization is based on the visitor's Mautic tracking cookie (if they have one).
 
-*   **Previewing:** Quickly checking the output of a template.
-*   **Iframes:** Embedding the template output within an `<iframe>` on an external site.
-*   **Direct Sharing:** Sharing a specific, potentially personalized, piece of content directly.
+    <Note>
+      Replace `https://your-mautic.com`, `{TEMPLATE_ID}`, and `{UNIQUE_HASH}` with the actual values provided by Mautic for your specific template.
+    </Note>
+  </Card>
+</CardGroup>
 
-**How to Use:**
-
-1.  Navigate to the Twig Template in Mautic.
-2.  Find the "Embed Twig Template" option.
-3.  Copy the "Direct HTML link".
-
-**Example Link:**
-
-```
-https://your-mautic.com/twig/template/{TEMPLATE_ID}/{UNIQUE_HASH}.html
-```
-
-<Note>
-  Again, replace placeholders with your Mautic URL and the specific ID/hash provided for the template. Accessing this URL will render the template based on the accessing browser's Mautic tracking cookie, if available.
-</Note>
-
-Using these embedding options allows you to extend Mautic's personalization power beyond its core channels.
+Using these embedding options helps you extend Mautic's personalization power beyond emails and landing pages.
