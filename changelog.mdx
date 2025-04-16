@@ -1,0 +1,44 @@
+---
+title: Changelog
+sidebarTitle: Changelog
+description: Keep track of changes and updates to the Mautic Extendee plugins.
+---
+import { Update } from '@mintlify/components';
+
+Keep track of changes and updates for the Mautic Extendee plugins, including the Twig Templates plugin.
+
+<Update label="2024-07-26" description="v1.2.0" tags={["Twig Templates"]}>
+  ### Features
+  - Added support for accessing Mautic Custom Objects via the `getCustomObjectItems` function (requires MauticCustomObjectsBundle).
+  - Added documentation page for Custom Objects support.
+
+  ### Docs
+  - Simplified Forms Support documentation.
+  - Simplified Custom Objects Support documentation.
+  - Added link to MauticCustomObjectsBundle repository.
+</Update>
+
+<Update label="2024-07-25" description="v1.1.0" tags={["Twig Templates", "Docs"]}>
+  ### Features
+  - Added ability to embed Twig Templates on external websites using Javascript or a direct HTML link.
+  - Added documentation page for external embedding.
+  - Added ability to use Twig tokens within the `{twigtemplate=...}` token name for dynamic template selection.
+
+  ### Docs
+  - Added iframe walkthrough to external embedding page.
+  - Restructured and simplified external embedding documentation.
+  - Added icons to clickable cards in introduction for better visibility.
+  - Renamed "Embedding Templates" section to "Reusing Twig Templates".
+  - Simplified various explanations and examples across documentation pages.
+  - Updated company snippets examples.
+</Update>
+
+<Update label="2024-07-24" description="v1.0.0" tags={["Twig Templates"]}>
+  ### Initial Release
+  - First version of the Twig Templates plugin.
+  - Support for advanced personalization in Mautic emails, landing pages, and text messages.
+  - Includes basic tokens (`contact`, `formresult`, `formresults`, `tokens`).
+  - Includes various Twig filters and functions (`get_content_from_url`, `json_decode`, `rss`, date functions, etc.).
+  - API endpoints for managing templates.
+  - Initial documentation structure.
+</Update>

@@ -57,6 +57,12 @@
           "twig-templates/embedding-externally",
           "twig-templates/api"
         ]
+      },
+      {
+        "tab": "Changelog",
+        "pages": [
+          "changelog"
+        ]
       }
     ]
   },
