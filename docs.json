@@ -45,6 +45,7 @@
       {
         "tab": "Twig Templates",
         "pages": [
+          "index",
           "twig-templates/introduction",
           "twig-templates/how-to-install",
           "twig-templates/how-to-use"
