@@ -61,8 +61,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/logo.webp",
-    "dark": "/logo/logo.webp"
+    "light": "/logo/logo.png",
+    "dark": "/logo/logo.png"
   },
   "navbar": {
     "links": [
