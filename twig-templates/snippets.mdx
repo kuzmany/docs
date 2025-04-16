@@ -10,16 +10,15 @@ This library provides a collection of useful Twig snippets to enhance personaliz
 Access primary company details and custom fields associated with a contact.
 
 ```twig
-{% if contact.companies is defined and contact.companies is not empty %}
-    {% for company in contact.companies %}
-        {% if company.is_primary == '1' %}
-            <p>Primary Company: {{ company.companyname }}</p>
-            <p>Custom Field: {{ company.companycustomfield }}</p>
-            {% break %}
-        {% endif %}
-    {% endfor %}
+{# Find the first company marked as primary, provide empty array as default if companies is not set #}
+{% set primary_company = contact.companies|default([])|filter(c => c.is_primary == '1')|first %}
+
+{# Display company info if found, otherwise show a message #}
+{% if primary_company %}
+    <p>Primary Company: {{ primary_company.companyname }}</p>
+    <p>Custom Field: {{ primary_company.companycustomfield }}</p>
 {% else %}
-    <p>No companies associated.</p>
+    <p>No primary company associated.</p>
 {% endif %}
 ```
 
