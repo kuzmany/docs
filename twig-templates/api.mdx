@@ -1,44 +1,125 @@
 ---
-title: Twig Templates API Support
-description: Manage your Mautic Twig Templates programmatically using the API endpoints.
+title: Twig Templates API
+description: Use the Mautic API to manage your Twig Templates for advanced personalization.
 ---
 import { Endpoint, Note } from '@mintlify/components';
 
-Manage your Twig Templates via the Mautic API. This allows for programmatic creation, retrieval, updating, and deletion of templates.
-
-## API Endpoints
-
-Here are the available endpoints for managing Twig Templates:
-
-<Endpoint method="GET" path="/api/twigTemplates" />
-Retrieves a list of all available Twig Templates.
-**Response:** A JSON array containing the Twig Templates.
-
-<Endpoint method="GET" path="/api/twigTemplates/{templateId}" />
-Retrieves the details of a single Twig Template by its ID.
-**Path Parameters:**
-- `{templateId}` (integer, required): The ID of the template to retrieve.
-**Response:** A JSON object representing the specified Twig Template.
-
-<Endpoint method="POST" path="/api/twigTemplates/new" />
-Creates a new Twig Template.
-**Request Body:** A JSON object containing the data for the new template (e.g., `name`, `content`).
-**Response:** A JSON object representing the newly created Twig Template.
-
-<Endpoint method="PATCH" path="/api/twigTemplates/{templateId}/edit" />
-Updates an existing Twig Template.
-**Path Parameters:**
-- `{templateId}` (integer, required): The ID of the template to edit.
-**Request Body:** A JSON object containing the fields to update.
-**Response:** A JSON object representing the updated Twig Template.
-<Note>If the specified template ID does not exist, a new template might be created (verify this behavior).</Note>
-
-<Endpoint method="DELETE" path="/api/twigTemplates/{templateId}/delete" />
-Deletes a specific Twig Template by its ID.
-**Path Parameters:**
-- `{templateId}` (integer, required): The ID of the template to delete.
-**Response:** A success status or confirmation message.
+The Twig Templates plugin extends the Mautic API, allowing you to manage your custom templates programmatically. This is useful for automation, integration with other systems, or bulk operations.
 
 <Note>
-  Ensure you have the necessary API permissions configured in Mautic to use these endpoints.
+  Ensure you have enabled and configured API access in your Mautic settings and have the necessary permissions for `twigtemplates`.
 </Note>
+
+## Get List of Twig Templates
+
+Retrieves a collection of all configured Twig Templates.
+
+<Endpoint method="GET" path="/api/twigTemplates" />
+
+**Successful Response (Example)**
+```json
+{
+  "twigTemplates": [
+    {
+      "id": 1,
+      "name": "Welcome Email Snippet",
+      "description": "Personalized greeting for new contacts",
+      "template": "Hello {{ contact.firstname|default('there') }}!",
+      "dateAdded": "..."
+    },
+    {
+      "id": 2,
+      "name": "Expiry Date Logic",
+      // ... other fields
+    }
+    // ... more templates
+  ]
+}
+```
+
+## Get a Specific Twig Template
+
+Fetches the details of a single Twig Template using its unique ID.
+
+<Endpoint method="GET" path="/api/twigTemplates/{templateId}" />
+
+**Path Parameters**
+- `{templateId}` (integer, required): The ID of the Twig Template you want to retrieve.
+
+**Successful Response (Example)**
+```json
+{
+  "twigTemplate": {
+    "id": 1,
+    "name": "Welcome Email Snippet",
+    "description": "Personalized greeting for new contacts",
+    "template": "Hello {{ contact.firstname|default('there') }}!",
+    "dateAdded": "...",
+    "dateModified": "...",
+    "createdBy": "...",
+    "modifiedBy": "..."
+  }
+}
+```
+
+## Create a Twig Template
+
+Allows you to add a new Twig Template to your Mautic instance.
+
+<Endpoint method="POST" path="/api/twigTemplates/new" />
+
+**Request Body Parameters**
+- `name` (string, required): The name for the new template.
+- `template` (string, required): The Twig code for the template.
+- `description` (string, optional): A brief description of the template's purpose.
+
+**Example Request Body**
+```json
+{
+  "name": "Dynamic Footer",
+  "template": "<p>Copyright {{ 'now'|date('Y') }}</p>",
+  "description": "Shows the current year in the footer"
+}
+```
+
+**Successful Response**
+Returns the newly created Twig Template object, similar to the response for `GET /api/twigTemplates/{templateId}`.
+
+## Edit a Twig Template
+
+Updates an existing Twig Template identified by its ID. You only need to send the fields you want to change.
+
+<Endpoint method="PATCH" path="/api/twigTemplates/{templateId}/edit" />
+
+**Path Parameters**
+- `{templateId}` (integer, required): The ID of the Twig Template to edit.
+
+**Request Body Parameters**
+- `name` (string, optional): The updated name for the template.
+- `template` (string, optional): The updated Twig code.
+- `description` (string, optional): The updated description.
+
+**Example Request Body (Updating only the template code)**
+```json
+{
+  "template": "<p>&copy; {{ 'now'|date('Y') }} Your Company</p>"
+}
+```
+<Note>
+  The documentation states that if the template doesn't exist, it might create a new one. Please verify this behavior in your Mautic version.
+</Note>
+
+**Successful Response**
+Returns the updated Twig Template object.
+
+## Delete a Twig Template
+
+Permanently removes a Twig Template from Mautic based on its ID.
+
+<Endpoint method="DELETE" path="/api/twigTemplates/{templateId}/delete" />
+
+**Path Parameters**
+- `{templateId}` (integer, required): The ID of the Twig Template to delete.
+
+**Successful Response**
+Typically returns a success status code (e.g., 200 OK or 204 No Content) and potentially a confirmation message in the response body.
