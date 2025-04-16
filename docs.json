@@ -66,12 +66,12 @@
     "dark": "/logo/logo.webp"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "mtcextendee.com",
-        "href": "https://mtcextendee.com/"
-      }
-    ]
+    "primary": {
+      "type": "button",
+      "label": "mtcextendee.com",
+      "href": "https://mtcextendee.com/"
+    },
+    "links": []
   },
   "footer": {
     "socials": {
