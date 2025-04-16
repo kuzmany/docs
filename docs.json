@@ -73,8 +73,8 @@
   "navbar": {
     "links": [
       {
-        "name": "Website",
-        "url": "https://www.mtcextendee.com/"
+        "label": "mtcextendee.com",
+        "href": "https://mtcextendee.com/"
       }
     ]
   },
