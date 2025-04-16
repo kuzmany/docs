@@ -44,21 +44,15 @@
             "pages": [
               "index"
             ]
-          },
-          {
-            "group": "Twig Templates",
-            "pages": [
-              "twig-templates/introduction",
-              "twig-templates/how-to-install",
-              "twig-templates/how-to-use"
-            ]
           }
         ]
       },
       {
-        "tab": "Tab 2",
+        "tab": "Twig Templates",
         "pages": [
-          "plugins/mautic-customizer/examples"
+          "twig-templates/introduction",
+          "twig-templates/how-to-install",
+          "twig-templates/how-to-use"
         ]
       }
     ]
