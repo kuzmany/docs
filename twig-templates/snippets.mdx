@@ -6,20 +6,40 @@ description: A collection of ready-to-use Twig snippets for Mautic personalizati
 
 This library provides a collection of useful Twig snippets to enhance personalization in your Mautic emails, landing pages, and text messages.
 
-## Contact's Companies and Company Custom Field
+## Access Primary Company Details
 
-Access primary company details and custom fields associated with a contact.
+Use the `contact.primaryCompany` shortcut to easily access the primary company associated with the contact. If no company is explicitly marked as primary, this will return the *first* company associated. It returns `null` if no companies are linked.
 
 ```twig
-{# Find the first company marked as primary, provide empty array as default if companies is not set #}
-{% set primary_company = contact.companies|default([])|filter(c => c.is_primary == '1')|first %}
-
-{# Display company info if found, otherwise show a message #}
-{% if primary_company %}
-    <p>Primary Company: {{ primary_company.companyname }}</p>
-    <p>Custom Field: {{ primary_company.companycustomfield }}</p>
+{% if contact.primaryCompany %}
+    <p>Your Primary Company: {{ contact.primaryCompany.companyname }}</p>
+    {# Access any standard or custom company field #}
+    <p>Industry: {{ contact.primaryCompany.companyindustry|default('Not specified') }}</p>
+    <p>Website: {{ contact.primaryCompany.companywebsite|default('N/A') }}</p>
 {% else %}
-    <p>No primary company associated.</p>
+    <p>You are not associated with any primary company in our records.</p>
+{% endif %}
+```
+
+## List All Associated Companies
+
+Iterate through all companies linked to the contact using `contact.companies`. This is useful if a contact might be associated with multiple companies or if you need to display a complete list.
+
+```twig
+{% if contact.companies is not empty %}
+    <p>Associated Companies:</p>
+    <ul>
+        {% for company in contact.companies %}
+            <li>
+                {{ company.companyname }}
+                {% if company.is_primary == '1' %} (Primary){% endif %}
+                {# Add more company details if needed #}
+                - {{ company.companycity|default('City Unknown') }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No companies associated with this contact.</p>
 {% endif %}
 ```
 
@@ -28,9 +48,16 @@ Access primary company details and custom fields associated with a contact.
 Iterate through and display a contact's tags.
 
 ```twig
-{% for tag in contact.tags %}
-    {{ tag }}
-{% endfor %}
+{% if contact.tags is not empty %}
+  <p>Your tags:</p>
+  <ul>
+  {% for tag in contact.tags %}
+      <li>{{ tag }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No tags assigned.</p>
+{% endif %}
 ```
 
 ## Contact's Segments
@@ -38,9 +65,16 @@ Iterate through and display a contact's tags.
 Iterate through and display the names of segments a contact belongs to.
 
 ```twig
-{% for segment in contact.segments %}
-    {{ segment.name }}
-{% endfor %}
+{% if contact.segments is not empty %}
+  <p>You are in these segments:</p>
+  <ul>
+  {% for segment in contact.segments %}
+      <li>{{ segment.name }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>Not currently in any segments.</p>
+{% endif %}
 ```
 
 ## Get Content from External URL
@@ -48,10 +82,19 @@ Iterate through and display the names of segments a contact belongs to.
 Fetch content from a URL, decode JSON, and process it as an array. Useful for dynamic content like abandoned cart details.
 
 ```twig
-{% set content = 'https://your.url' | get_content_from_url | json_decode %}
-{{ content.title }}
-{{ content.data }}
-{{ content.link}}
+{# Example: Fetching product details from an API endpoint #}
+{% set product_url = 'https://api.yourstore.com/products/' ~ contact.last_viewed_product_id %}
+{% set product_data = product_url | get_content_from_url | json_decode %}
+
+{% if product_data %}
+  <p>Still interested in the {{ product_data.name }}?</p>
+  <p>Price: {{ product_data.price }}</p>
+  <p><a href="{{ product_data.url }}">View Product</a></p>
+{% endif %}
+
+{# Example: Fetching simple text content #}
+{% set announcement = 'https://your.site/announcement.txt' | get_content_from_url %}
+<p>Latest News: {{ announcement }}</p>
 ```
 
 ## Content Segmentation based on Contact Affinity
@@ -60,13 +103,13 @@ Display different content based on a contact field value (e.g., `affinity`).
 
 ```twig
 {% if contact.affinity == 'private' %}
-<p>This is Private Content</p>
-{% endif %}
-{% if contact.affinity == 'b2b' %}
-<p>This is B2B Content</p>
-{% endif %}
-{% if contact.affinity == 'agency' %}
-<p>This is Agency Content</p>
+<p>This is Private Content, tailored for individual users.</p>
+{% elseif contact.affinity == 'b2b' %}
+<p>This is B2B Content, relevant for business clients.</p>
+{% elseif contact.affinity == 'agency' %}
+<p>This is Agency Content, specifically for our partners.</p>
+{% else %}
+<p>Here's some general information.</p>
 {% endif %}
 ```
 
@@ -83,23 +126,29 @@ Ensure text, like a contact's first name, is capitalized.
 Retrieve and display content from an RSS feed.
 
 ```twig
-{% set feed= 'https://your.rss.feed.url' | rss %}
+{% set feed = 'https://your.rss.feed.url' | rss %}
 
-<h1>{{ feed.channel.title }}</h1>
-<p><a href="{{ feed.channel.link }}">{{ feed.channel.link }}</a></p>
-<p>Published: {{ feed.channel.pubDate }}</p>
-<p>{{ feed.channel.description }}</p>
+{% if feed and feed.channel %}
+  <h1>{{ feed.channel.title }}</h1>
+  <p><a href="{{ feed.channel.link }}">{{ feed.channel.link }}</a></p>
+  <p>Published: {{ feed.channel.pubDate }}</p>
+  <p>{{ feed.channel.description }}</p>
 
-<h2>Articles</h2>
-<ul>
-    {% for item in feed.channel.item %}
-        <li>
-            <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
-            <p>Published: {{ item.pubDate }}</p>
-                 {{ item.description|raw }}
-        </li>
-    {% endfor %}
-</ul>
+  <h2>Articles</h2>
+  <ul>
+      {% for item in feed.channel.item %}
+          <li>
+              <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+              <p>Published: {{ item.pubDate }}</p>
+                   {{ item.description|raw }} {# Use raw filter if description contains HTML #}
+          </li>
+      {% else %}
+          <li>No articles found in the feed.</li>
+      {% endfor %}
+  </ul>
+{% else %}
+  <p>Could not load the RSS feed.</p>
+{% endif %}
 ```
 
 ## Expiry Date Calculation
@@ -107,29 +156,49 @@ Retrieve and display content from an RSS feed.
 Calculate the difference between a date field (e.g., `date_last_order`) and the current date.
 
 ```twig
-{% set dateExpiry = contact.date_last_order |date('d-m-Y') %}
-{% set today = "now"|date('d-m-Y') %}
-{% set difference = date(today).diff(date(dateExpiry))%}
-{% set leftDays = difference.days %}
-{% if dateExpiry == today %}
-      1 day
+{% set expiry_date_str = contact.date_last_order %} {# Assuming YYYY-MM-DD format #}
+{% if expiry_date_str %}
+  {% set expiry_date = expiry_date_str|date('U') %} {# Convert to Unix timestamp #}
+  {% set today = "now"|date('U') %}
+  {% set difference_seconds = expiry_date - today %}
+  {% set days_left = (difference_seconds / (60*60*24))|round(0, 'floor') %}
+
+  {% if days_left < 0 %}
+    <p>Your offer has expired.</p>
+  {% elseif days_left == 0 %}
+    <p>Your offer expires today!</p>
+  {% elseif days_left == 1 %}
+    <p>Your offer expires tomorrow (1 day left).</p>
+  {% else %}
+    <p>Your offer expires in {{ days_left }} days.</p>
+  {% endif %}
 {% else %}
-    {{ leftDays }} days left
+  <p>No expiry date found.</p>
+{% endif %}
+
+{# Simpler example for days *since* a date #}
+{% set last_order_date_str = contact.date_last_order %}
+{% if last_order_date_str %}
+    {% set last_order_date = date(last_order_date_str) %}
+    {% set today = date("now") %}
+    {% set difference = today.diff(last_order_date) %}
+    {% set days_ago = difference.days %}
+    <p>Your last order was {{ days_ago }} days ago.</p>
 {% endif %}
 ```
 
 ## Time-Based Greetings
 
-Display greetings based on the current time of day.
+Display greetings based on the current time of day (server time).
 
 ```twig
-{% set currentTime = "now"|date("H") %}
-{% if currentTime >= 5 and currentTime < 12 %}
-    <p>Good morning!</p>
-{% elseif currentTime >= 12 and currentTime < 18 %}
-    <p>Good afternoon!</p>
+{% set currentHour = "now"|date("H") %}
+{% if currentHour >= 5 and currentHour < 12 %}
+    <p>Good morning, {{ contact.firstname|default('there') }}!</p>
+{% elseif currentHour >= 12 and currentHour < 18 %}
+    <p>Good afternoon, {{ contact.firstname|default('there') }}!</p>
 {% else %}
-    <p>Good evening!</p>
+    <p>Good evening, {{ contact.firstname|default('there') }}!</p>
 {% endif %}
 ```
 
@@ -138,7 +207,8 @@ Display greetings based on the current time of day.
 Provide a default value if a contact field is empty.
 
 ```twig
-<p>The Gender is {{contact.gender|default('unknown')}}</p>
+<p>Your preferred language is {{ contact.preferred_language|default('English') }}.</p>
+<p>Welcome, {{ contact.firstname|default('Valued Customer') }}!</p>
 ```
 
 ## Magic with Dates
@@ -146,21 +216,23 @@ Provide a default value if a contact field is empty.
 Manipulate and format dates.
 
 ```twig
-Tomorrow
-{{ "now"|date_modify('+1 day')|date("m/d/Y") }}
+Tomorrow is {{ "now"|date_modify('+1 day')|date("l, F jS, Y") }}
 
-Today
-{{ "now"|date("m/d/Y") }}
+Today's date: {{ "now"|date("Y-m-d") }}
 
-Today is happy {{ "now"|date("l") }}
+The current month is {{ "now"|date("F") }}
 ```
 
 ## Random Selection
 
-Choose a random item from a list.
+Choose a random item from a list. Useful for varying greetings or calls to action.
 
 ```twig
-{{ random(['apple', 'orange', 'citrus']) }}
+{# Random greeting variation #}
+<p>{{ random(['Hello', 'Hi', 'Hey there']) }}, {{ contact.firstname|default('friend') }}!</p>
+
+{# Random call to action #}
+<a href="/offer">{{ random(['Learn More', 'Get Started', 'Discover Now']) }}</a>
 ```
 
 ## Gender-Based Proper Greeting (German Example)
@@ -168,32 +240,50 @@ Choose a random item from a list.
 Customize greetings based on gender using a contact's title field.
 
 ```twig
-{% if contact.title %}
-  {% if contact.title == "Frau" %}
-    <p>Sehr geehrte {{contact.title}} {{contact.lastname}}</p>
-  {% endif %}
-
-  {% if contact.title == "Herr" %}
-   <p>Sehr geehrter {{contact.title}} {{contact.lastname}}</p>
-  {% endif %}
+{% if contact.title == "Frau" %}
+  <p>Sehr geehrte {{ contact.title }} {{ contact.lastname }},</p>
+{% elseif contact.title == "Herr" %}
+ <p>Sehr geehrter {{ contact.title }} {{ contact.lastname }},</p>
+{% else %}
+  {# Fallback for other titles or no title #}
+  <p>Guten Tag {{ contact.firstname|default('') }} {{ contact.lastname }},</p>
 {% endif %}
 ```
 
 ## Personalize Content with JSON Decode
 
-Process JSON stored in a contact field to display personalized content like cart items or order details.
+Process JSON stored in a contact field (e.g., `cart_data`) to display personalized content like cart items or order details.
 
 ```twig
-{% set cart = contact.json_field | json_decode %}
-{% for item in cart %}
-{{item.name | raw }}
-{% endfor %}
+{% set cart_json = contact.cart_data %}
+{% if cart_json %}
+  {% set cart = cart_json | json_decode %}
+  {% if cart and cart.items is not empty %}
+    <p>Items left in your cart:</p>
+    <ul>
+    {% for item in cart.items %}
+      <li>{{ item.name }} - Quantity: {{ item.quantity }} - Price: {{ item.price }}</li>
+    {% endfor %}
+    </ul>
+    <p>Total: {{ cart.total_price }}</p>
+    <p><a href="https://yourstore.com/cart">Complete your purchase</a></p>
+  {% else %}
+    <p>Your cart is currently empty.</p>
+  {% endif %}
+{% else %}
+  <p>Visit our store to start shopping!</p>
+{% endif %}
 ```
 
 ## Support for Email Tokens in API
 
-Use email tokens when sending emails via the API by passing them in the payload. See the [API Documentation](/twig-templates/api) for more details on managing templates via API.
+Use email tokens when sending emails via the API by passing them in the `tokens` key of the payload. See the [API Documentation](/twig-templates/api) for more details.
 
 ```twig
-{{ tokens['{mycustomtoken}'] }}
+{# Example: Assuming you passed {'{discount_code}': 'SUMMER20'} in the API payload #}
+<p>Your special discount code is: {{ tokens['{discount_code}']|default('No code available') }}</p>
+
+{# Example: Using a token for a personalized link #}
+{% set tracking_link = tokens['{tracking_url}']|default('https://yoursite.com') %}
+<p><a href="{{ tracking_link }}">Track your order</a></p>
 ```
