@@ -2,7 +2,9 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Mautic Extendee",
-
+  "icons": {
+    "library": "fontawesome"
+  },
   "colors": {
     "primary": "#2563EB",
     "light": "#60A5FA",
