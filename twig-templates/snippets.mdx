@@ -43,6 +43,18 @@ Iterate through all companies linked to the contact using `contact.companies`. T
 {% endif %}
 ```
 
+## Comma-Separated List of Company Names
+
+Display a simple comma-separated list of the names of all companies associated with the contact.
+
+```twig
+{% if contact.companies is not empty %}
+  <p>Your Companies: {{ contact.companies|map(c => c.companyname)|join(', ') }}</p>
+{% else %}
+  <p>No companies associated.</p>
+{% endif %}
+```
+
 ## Contact's Tags
 
 Iterate through and display a contact's tags.
