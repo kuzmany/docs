@@ -31,3 +31,29 @@ This example demonstrates:
 The Twig syntax is designed to be easy to learn. You don't need to stress over complex syntax.
 
 For more examples and ready-to-use snippets, check out our [Twig Templates Snippets Library](/twig-templates/snippets).
+
+## Embedding Templates
+
+You can embed one Twig Template within another using a special token format. This allows you to create reusable components or complex conditional logic structures.
+
+Use the `{twigtemplate=TEMPLATE_NAME}` token, replacing `TEMPLATE_NAME` with the exact name of the Twig Template you created in Mautic.
+
+**Example: Gender-Based Greeting Snippets**
+
+Imagine you have two separate Twig Templates saved:
+*   `helloM` containing: `Hello Mr. {{ contact.lastname }}`
+*   `helloW` containing: `Hello Ms. {{ contact.lastname }}`
+
+You can then use conditional logic in your main email or landing page template to embed the correct greeting:
+
+```twig
+{% if contact.gender == 'm' %}
+  {twigtemplate=helloM}
+{% elseif contact.gender == 'w' %}
+  {twigtemplate=helloW}
+{% else %}
+  Hello {{ contact.firstname|default('there') }}! {# Fallback greeting #}
+{% endif %}
+```
+
+This approach keeps your main templates cleaner and makes managing reusable snippets easier. Just ensure the templates you reference (`helloM`, `helloW`) exist in your Mautic Twig Templates list.
