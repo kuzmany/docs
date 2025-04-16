@@ -79,6 +79,6 @@ Following the previous example, if you named your saved templates consistently b
 <p>Thank you for being a customer!</p>
 ```
 
-This code achieves the same result as the conditional example above but is more concise. Mautic will evaluate the Twig inside the token (`{{ contact.membership_tier|default('standard') }}`) first, determine the resulting template name (e.g., `offer-gold`), and then insert the content of that specific saved Twig Template.
+This achieves the same result as the conditional example, just more concisely. Mautic first processes the Twig inside the token (e.g., `{{ contact.membership_tier|default('standard') }}`) to get the final template name (like `offer-gold`). Then, it inserts the content of the matching saved Twig Template.
 
-Make sure the dynamically generated names perfectly match the names of your saved Twig Templates.
+Ensure the generated names exactly match your saved Twig Template names.
