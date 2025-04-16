@@ -1,10 +1,32 @@
 ---
 title: Using Twig Templates
-description: Guide on how to effectively use Twig templates.
+description: Guide on how to effectively use Twig templates for Mautic personalization.
 ---
 
 # Using Twig Templates
 
-Learn how to leverage Twig templates for customizing your Mautic experience.
+Learn how to leverage Twig templates for customizing your Mautic experience. Twig provides a powerful yet simple syntax for adding logic directly into your Mautic assets.
 
-*(Usage examples and guidelines will go here)*
+## Basic Example
+
+Here's a simple example showing how to display different content based on a contact's custom field value (e.g., `affinity`):
+
+```twig
+{% if contact.affinity == 'private' %}
+  <p>This is Private Content</p>
+{% elseif contact.affinity == 'b2b' %}
+  <p>This is B2B Content</p>
+{% elseif contact.affinity == 'agency' %}
+  <p>This is Agency Content</p>
+{% else %}
+  <p>This is Default Content</p>
+{% endif %}
+```
+
+This example demonstrates conditional logic based on the `affinity` field of the `contact` object.
+
+## Learning Twig
+
+The Twig syntax is designed to be easy to learn. You don't need to stress over complex syntax.
+
+For more examples and ready-to-use snippets, check out our [Twig Templates Snippets Library](https://mtcextendee.com/mautic-twig-templates-bundle-snippets-library/).
