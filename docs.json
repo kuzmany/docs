@@ -37,14 +37,9 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Tab 1",
-        "groups": [
-          {
-            "group": "Welcome",
-            "pages": [
-              "index"
-            ]
-          }
+        "tab": "Home",
+        "pages": [
+          "index"
         ]
       },
       {
