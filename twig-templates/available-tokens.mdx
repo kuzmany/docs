@@ -1,0 +1,85 @@
+---
+title: Available Twig Tokens
+sidebarTitle: Available Tokens
+description: Reference guide for tokens available within the Twig Templates plugin for Mautic.
+---
+import { Note } from '@mintlify/components';
+
+The Twig Templates plugin provides several objects and tokens you can use to access Mautic data and perform actions within your templates.
+
+## Contact Object (`contact`)
+
+The `contact` object provides access to the fields of the contact viewing the email or landing page.
+
+*   **Standard Fields:** Access any standard Mautic contact field using its alias (e.g., `contact.firstname`, `contact.email`, `contact.city`).
+    ```twig
+    Hello {{ contact.firstname|default('there') }}!
+    Your email is {{ contact.email }}.
+    ```
+*   **Custom Fields:** Access custom contact fields using their alias (e.g., `contact.custom_field_alias`).
+    ```twig
+    Your preference: {{ contact.preference_field }}
+    ```
+*   **Tags:** Access the contact's tags as an array.
+    ```twig
+    {% if 'VIP' in contact.tags %}
+      <p>Welcome, VIP!</p>
+    {% endif %}
+
+    <ul>
+    {% for tag in contact.tags %}
+        <li>{{ tag }}</li>
+    {% endfor %}
+    </ul>
+    ```
+*   **Segments:** Access the segments (lists) the contact belongs to as an array of objects. Each object has properties like `id` and `name`.
+    ```twig
+    {% for segment in contact.segments %}
+        {% if segment.name == 'Newsletter Subscribers' %}
+            <p>Thanks for subscribing!</p>
+        {% endif %}
+    {% endfor %}
+    ```
+*   **Companies:** Access the companies associated with the contact as an array of objects. Use filters to find the primary company.
+    ```twig
+    {# Find the first company marked as primary #}
+    {% set primary_company = contact.companies|default([])|filter(c => c.is_primary == '1')|first %}
+    {% if primary_company %}
+        <p>Company: {{ primary_company.companyname }}</p>
+        <p>Industry: {{ primary_company.companyindustry }}</p> {# Example custom field #}
+    {% endif %}
+    ```
+
+## Form Result Tokens
+
+These tokens are available only when an email is triggered by a form submission action (either directly or via a campaign). See [Forms Support](/twig-templates/forms-support) for details.
+
+*   **`formresult`**: An object containing the data from the *most recent* form submission by the contact. Field names correspond to form field aliases.
+    ```twig
+    Thank you for submitting the form, {{ formresult.firstname }}!
+    Your message: {{ formresult.message_field }}
+    ```
+*   **`formresults`**: An array containing *all* form submission data associated with the contact. Each element is an object like `formresult`.
+    ```twig
+    <p>Submission History:</p>
+    <ul>
+    {% for result in formresults %}
+        <li>{{ result.dateSubmitted|date('Y-m-d') }}: {{ result.email }}</li>
+    {% else %}
+        <li>No submissions recorded.</li>
+    {% endfor %}
+    </ul>
+    ```
+
+## Email Tokens (`tokens`)
+
+When sending emails via the API, you can pass custom tokens in the payload. These are accessible via the `tokens` object. See the [API Documentation](/twig-templates/api) for usage.
+
+```twig
+{# Assuming 'mycustomtoken' was passed in the API payload #}
+Your special code is: {{ tokens['{mycustomtoken}'] }}
+```
+
+<Note>
+  This list covers tokens specifically added or enhanced by the Twig Templates plugin. Standard Twig variables and functions (like `now` for the current time) are also available. Refer to the official [Twig Documentation](https://twig.symfony.com/doc/3.x/) for more on standard Twig capabilities.
+</Note>
