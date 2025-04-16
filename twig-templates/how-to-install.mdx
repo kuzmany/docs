@@ -1,23 +1,24 @@
 ---
 title: Installing Twig Templates
-description: How to install and set up the Mautic Twig Templates bundle.
+description: How to add the Mautic Twig Templates plugin to your Mautic setup.
 ---
 
-Follow these steps to install the Mautic Twig Templates bundle:
+Here's how to add the Twig Templates plugin to your Mautic:
 
-1.  **Download:** Once you receive the purchase confirmation email, use the provided link to download the latest version of the bundle.
-2.  **Upload:** Copy the downloaded plugin folder to your Mautic installation's `plugins/` directory. Ensure the folder name is descriptive, like `MauticTwigTemplatesBundle`.
-3.  **Clear Cache:** Run the following command from your Mautic root directory in the console:
+1.  **Download:** After buying, click the download link in your email to get the plugin file (it will be a folder).
+2.  **Upload:** Put the downloaded plugin folder into the `plugins/` folder inside your main Mautic files. Make sure the folder is named clearly, for example, `MauticTwigTemplatesBundle`.
+3.  **Clear Cache:** Open your server's command line (terminal), go to your main Mautic folder, and run this command:
     ```bash
     php bin/console cache:clear
     ```
-4.  **Reload Plugins:** Run this command to make Mautic recognize the new plugin:
+    This helps Mautic refresh things.
+4.  **Update Plugins:** Run this command so Mautic knows about the new plugin:
     ```bash
     php bin/console mautic:plugins:reload
     ```
-5.  **Generate Assets:** Finally, regenerate assets with this command:
+5.  **Update Files:** Lastly, run this command to update necessary files:
     ```bash
     php bin/console mautic:assets:generate
     ```
 
-After these steps, the plugin should be installed and available within your Mautic instance.
+That's it! The plugin should now be ready to use in Mautic.
