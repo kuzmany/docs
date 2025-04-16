@@ -1,0 +1,99 @@
+---
+title: Custom Objects Support
+sidebarTitle: Custom Objects
+description: Access data from Mautic's Custom Objects within your Twig Templates.
+---
+import { Note } from '@mintlify/components';
+
+<Note>
+  This feature requires the separate **MauticCustomObjectsBundle** plugin to be installed and enabled in your Mautic instance.
+</Note>
+
+The Twig Templates plugin allows you to access items from Mautic's Custom Objects feature directly within your templates using the `getCustomObjectItems` function. This enables powerful personalization based on related data like orders, subscriptions, event attendance, etc.
+
+## Loading Custom Object Items
+
+Use the `getCustomObjectItems` function to retrieve an array of items belonging to a specific Custom Object.
+
+`getCustomObjectItems(alias, limit, page, orderBy, orderDirection, search, contactId)`
+
+**Parameters:**
+
+*   **`alias`** (string, required): The alias of the Custom Object you want to query (e.g., `'orders'`, `'products'`).
+*   **`limit`** (integer, optional): Maximum number of items to return (default: 1000).
+*   **`page`** (integer, optional): Page number for pagination (default: 1).
+*   **`orderBy`** (string, optional): Field to sort by (`'id'` or `'name'`, default: `'id'`).
+*   **`orderDirection`** (string, optional): Sort direction (`'ASC'` or `'DESC'`, default: `'ASC'`).
+*   **`search`** (string, optional): A string to search within the items (default: `null`).
+*   **`contactId`** (integer, optional): Filter items associated with a specific Mautic Contact ID (default: `null`). Use `contact.id` to filter by the current contact.
+
+**Return Value:**
+
+The function returns an array of items. Each item in the array is itself an associative array containing:
+*   `id`: The ID of the Custom Object item.
+*   `name`: The name of the Custom Object item.
+*   `fields`: An associative array containing the values of the item's custom fields, keyed by the field alias (e.g., `item.fields.your_field_alias`). For 'select' type fields, the label is returned instead of the raw value.
+
+## Accessing Item Fields
+
+Once you have loaded the items into a variable (e.g., `myItems`), you can loop through them and access their standard properties (`id`, `name`) and custom field values using the `fields` array.
+
+```twig
+{% for item in myItems %}
+  Item ID: {{ item.id }}
+  Item Name: {{ item.name }}
+  Custom Field Value: {{ item.fields.your_field_alias }}
+{% endfor %}
+```
+
+## Example: Displaying recent changelog entries
+
+This example fetches the 5 most recent items from a Custom Object named 'changelogs' and displays their details.
+
+```twig
+{# Load the latest 5 changelog items, ordered by name descending #}
+{% set changelogs = getCustomObjectItems('changelogs', 5, 1, 'name', 'DESC') %}
+
+{% if changelogs is not empty %}
+    <h2>Recent Changelog</h2>
+    <ul>
+        {% for item in changelogs %}
+            <li>
+                <h3>{{ item.name }}</h3> {# Access standard name property #}
+                <p>
+                    Product: <a href="/{{ item.fields.product_alias }}"> {# Access custom field 'product_alias' #}
+                                {{ item.fields.product_alias }}
+                             </a><br/>
+                    Version: {{ item.fields.version_alias }} {# Access custom field 'version_alias' #}
+                </p>
+                <div>
+                    {{ item.fields.content_alias | raw }} {# Access custom field 'content_alias' #}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No changelog entries found.</p>
+{% endif %}
+```
+
+## Example: Displaying the last order for the current contact
+
+This example retrieves the single latest item from an 'orders' Custom Object that is associated with the current contact.
+
+```twig
+{% if contact.id is defined %}
+    {# Load the single latest order associated with the current contact #}
+    {% set lastOrder = getCustomObjectItems('orders', 1, 1, 'id', 'DESC', null, contact.id) %}
+
+    {% if lastOrder is not empty %}
+        {% set orderItem = lastOrder|first %} {# Get the first (and only) item #}
+        <p>
+            Your last order number #{{ orderItem.name }} was placed on
+            {{ orderItem.fields.date_ordered_alias }}. {# Access custom field 'date_ordered_alias' #}
+        </p>
+    {% else %}
+        <p>You have no previous orders.</p>
+    {% endif %}
+{% endif %}
+```

@@ -52,6 +52,7 @@
           "twig-templates/how-to-use",
           "twig-templates/available-tokens",
           "twig-templates/snippets",
+          "twig-templates/custom-objects-support",
           "twig-templates/forms-support",
           "twig-templates/embedding-externally",
           "twig-templates/api"
