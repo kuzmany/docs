@@ -41,7 +41,8 @@
       {
         "tab": "Home",
         "pages": [
-          "homepage"
+          "homepage",
+          "changelog"
         ]
       },
       {
@@ -56,12 +57,6 @@
           "twig-templates/forms-support",
           "twig-templates/embedding-externally",
           "twig-templates/api"
-        ]
-      },
-      {
-        "tab": "Changelog",
-        "pages": [
-          "changelog"
         ]
       }
     ]
