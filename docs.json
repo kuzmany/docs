@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "paradigm",
+  "theme": "mint",
   "name": "Mautic Extendee",
 
   "colors": {
@@ -53,8 +53,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/logo.webp",
+    "dark": "/logo/logo.webp"
   },
   "navbar": {
     "links": [
