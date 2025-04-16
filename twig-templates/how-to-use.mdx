@@ -40,33 +40,9 @@ Use the `{twigtemplate=TEMPLATE_NAME}` token, replacing `TEMPLATE_NAME` with the
 
 **Example: Tier-Based Promotional Offers**
 
-Imagine you want to show different offers to contacts based on their membership level, stored in a custom field called `membership_tier`. You could create separate Twig Templates for each offer:
+Imagine you want to show different offers to contacts based on their membership level, stored in a custom field called `membership_tier`. You could create separate Twig Templates for each offer (e.g., `Gold Member Offer`, `Silver Member Offer`, `Standard Welcome Offer`).
 
-*   **Template Name:** `Gold Member Offer`
-    ```twig
-    <div style="border: 2px solid gold; padding: 10px;">
-      <h3>Exclusive Gold Member Discount!</h3>
-      <p>As a valued Gold Member, enjoy 25% off your next purchase!</p>
-      <p>Use code: GOLD25</p>
-    </div>
-    ```
-*   **Template Name:** `Silver Member Offer`
-    ```twig
-    <div style="border: 1px solid silver; padding: 10px;">
-      <h4>Silver Member Special</h4>
-      <p>Get 15% off your next order as a thank you!</p>
-      <p>Use code: SILVER15</p>
-    </div>
-    ```
-*   **Template Name:** `Standard Welcome Offer`
-    ```twig
-    <div style="border: 1px dashed #ccc; padding: 10px;">
-      <p>Welcome! Enjoy 10% off your first purchase.</p>
-      <p>Use code: WELCOME10</p>
-    </div>
-    ```
-
-Now, in your main email or landing page template, you can use conditional logic to embed the correct offer based on the contact's `membership_tier` field:
+Then, in your main email or landing page template, you can use conditional logic to embed the correct offer based on the contact's `membership_tier` field:
 
 ```twig
 <h2>Your Special Offer</h2>
