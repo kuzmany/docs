@@ -1,58 +1,57 @@
 ---
 title: Twig Templates Forms Support
 sidebarTitle: Forms Support
-description: Use Mautic form submission data directly within your Twig templates.
+description: Use data from Mautic form submissions in your Twig templates.
 ---
 import { Note } from '@mintlify/components';
 
-The Twig Templates plugin allows you to access data submitted through Mautic forms directly within your email or landing page content.
+You can use data that contacts submit through Mautic forms directly in your emails or landing pages using Twig Templates.
 
 <Note>
-  This feature is only available when an email is sent using either:
-  *   The **"Send email to contact"** form action.
-  *   A **"Send email"** campaign action where the campaign source is a form submission.
+  **Important:** This only works if the email is sent using:
+  *   A "Send email to contact" action directly on a form.
+  *   A "Send email" action in a campaign that starts when a form is submitted.
 </Note>
 
-## Available Form Tokens
+## Form Data Tokens
 
-When the conditions above are met, you can use these special tokens:
+When an email is sent in one of the ways mentioned above, you can use these special tokens:
 
-*   `{{ formresult }}`: An object containing the data from the **most recent** form submission by the contact.
-*   `{{ formresults }}`: An array containing **all** form submission data associated with the contact.
+*   `{{ formresult }}`: Contains the data from the **single, most recent** form submission by the contact.
+*   `{{ formresults }}`: Contains a list (array) of **all** form submissions made by the contact.
 
-## Using the Last Form Result
+## Using the Last Submission (`formresult`)
 
-Access fields from the most recent submission using the `formresult` object. The field names correspond to the form field aliases.
+To show data from the contact's latest form submission, use the `formresult` token. You access the submitted values using the form field's alias (the unique name you gave the field).
 
 ```twig
-<p>Thank you for your submission, {{ formresult.firstname }}!</p>
-<p>We have received your details:</p>
+<p>Thanks for submitting, {{ formresult.firstname }}!</p>
+<p>Here's what we received:</p>
 <ul>
   <li>First Name: {{ formresult.firstname }}</li>
-  <li>Last Name: {{ formresult.lastname }}</li>
   <li>Email: {{ formresult.email }}</li>
-  {# Access other form fields using their alias #}
+  {# Use the alias of your form field #}
   <li>Your Message: {{ formresult.message_field_alias }}</li>
 </ul>
 ```
 
-## Using All Form Results
+## Using All Submissions (`formresults`)
 
-If you need to access data from multiple submissions by the same contact, you can loop through the `formresults` array. Each item in the array is an object similar to `formresult`.
+If you need to show data from older submissions, you can loop through the `formresults` list. Each item in the list (`result` in the example below) works like the `formresult` token.
 
 ```twig
-<p>Here is a history of your submissions:</p>
+<p>Your submission history:</p>
 <ul>
 {% for result in formresults %}
     <li>
-        Submission on {{ result.dateSubmitted|date('Y-m-d H:i') }}:
-        First Name: {{ result.firstname }}, Last Name: {{ result.lastname }}
-        {# Add other relevant fields #}
+        Submitted on {{ result.dateSubmitted|date('Y-m-d H:i') }}:
+        Name: {{ result.firstname }} {{ result.lastname }}
+        {# Add other fields if needed #}
     </li>
 {% else %}
-    <li>No previous submissions found.</li>
+    <li>You haven't submitted this form before.</li>
 {% endfor %}
 </ul>
 ```
 
-This allows you to display historical data or perform logic based on past interactions through forms.
+This lets you show past interactions or use historical form data in your content.
