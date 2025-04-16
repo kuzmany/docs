@@ -40,19 +40,28 @@ The `contact` object provides access to the fields of the contact viewing the em
         {% endif %}
     {% endfor %}
     ```
-*   **Companies:** Access the companies associated with the contact as an array of objects. Use filters to find the primary company.
+*   **Companies (`contact.companies`):** Access *all* companies associated with the contact as an array of company objects. Each object contains the company's fields.
     ```twig
-    {# Find the first company marked as primary #}
-    {% set primary_company = contact.companies|default([])|filter(c => c.is_primary == '1')|first %}
-    {% if primary_company %}
-        <p>Company: {{ primary_company.companyname }}</p>
-        <p>Industry: {{ primary_company.companyindustry }}</p> {# Example custom field #}
+    {% if contact.companies is not empty %}
+        <p>Associated Companies:</p>
+        <ul>
+            {% for company in contact.companies %}
+                <li>
+                    {{ company.companyname }}
+                    {% if company.is_primary == '1' %} (Primary){% endif %}
+                    - {{ company.companycity|default('City Unknown') }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No companies associated with this contact.</p>
     {% endif %}
     ```
 *   **Primary Company Shortcut (`contact.primaryCompany`):** Returns the primary company object if one is set. If no company is explicitly marked as primary, it returns the *first* company associated with the contact. Returns `null` if the contact has no associated companies.
     ```twig
     {% if contact.primaryCompany %}
         <p>Primary/First Company Name: {{ contact.primaryCompany.companyname }}</p>
+        <p>Industry: {{ contact.primaryCompany.companyindustry|default('Not specified') }}</p>
     {% else %}
         <p>No company associated.</p>
     {% endif %}
