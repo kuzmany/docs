@@ -1,0 +1,201 @@
+---
+title: Twig Templates Snippets Library
+description: A collection of ready-to-use Twig snippets for Mautic personalization.
+---
+
+# Twig Templates Snippets Library
+
+This library provides a collection of useful Twig snippets to enhance personalization in your Mautic emails, landing pages, and text messages.
+
+## Contact's Companies and Company Custom Field
+
+Access primary company details and custom fields associated with a contact.
+
+```twig
+{% if contact.companies is defined and contact.companies is not empty %}
+    {% for company in contact.companies %}
+        {% if company.is_primary == '1' %}
+            <p>Primary Company: {{ company.companyname }}</p>
+            <p>Custom Field: {{ company.companycustomfield }}</p>
+            {% break %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>No companies associated.</p>
+{% endif %}
+```
+
+## Contact's Tags
+
+Iterate through and display a contact's tags.
+
+```twig
+{% for tag in contact.tags %}
+    {{ tag }}
+{% endfor %}
+```
+
+## Contact's Segments
+
+Iterate through and display the names of segments a contact belongs to.
+
+```twig
+{% for segment in contact.segments %}
+    {{ segment.name }}
+{% endfor %}
+```
+
+## Get Content from External URL
+
+Fetch content from a URL, decode JSON, and process it as an array. Useful for dynamic content like abandoned cart details.
+
+```twig
+{% set content = 'https://your.url' | get_content_from_url | json_decode %}
+{{ content.title }}
+{{ content.data }}
+{{ content.link}}
+```
+
+## Content Segmentation based on Contact Affinity
+
+Display different content based on a contact field value (e.g., `affinity`).
+
+```twig
+{% if contact.affinity == 'private' %}
+<p>This is Private Content</p>
+{% endif %}
+{% if contact.affinity == 'b2b' %}
+<p>This is B2B Content</p>
+{% endif %}
+{% if contact.affinity == 'agency' %}
+<p>This is Agency Content</p>
+{% endif %}
+```
+
+## Always Capitalize
+
+Ensure text, like a contact's first name, is capitalized.
+
+```twig
+{{ contact.firstname|capitalize }}
+```
+
+## Fetch RSS Data
+
+Retrieve and display content from an RSS feed.
+
+```twig
+{% set feed= 'https://your.rss.feed.url' | rss %}
+
+<h1>{{ feed.channel.title }}</h1>
+<p><a href="{{ feed.channel.link }}">{{ feed.channel.link }}</a></p>
+<p>Published: {{ feed.channel.pubDate }}</p>
+<p>{{ feed.channel.description }}</p>
+
+<h2>Articles</h2>
+<ul>
+    {% for item in feed.channel.item %}
+        <li>
+            <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+            <p>Published: {{ item.pubDate }}</p>
+                 {{ item.description|raw }}
+        </li>
+    {% endfor %}
+</ul>
+```
+
+## Expiry Date Calculation
+
+Calculate the difference between a date field (e.g., `date_last_order`) and the current date.
+
+```twig
+{% set dateExpiry = contact.date_last_order |date('d-m-Y') %}
+{% set today = "now"|date('d-m-Y') %}
+{% set difference = date(today).diff(date(dateExpiry))%}
+{% set leftDays = difference.days %}
+{% if dateExpiry == today %}
+      1 day
+{% else %}
+    {{ leftDays }} days left
+{% endif %}
+```
+
+## Time-Based Greetings
+
+Display greetings based on the current time of day.
+
+```twig
+{% set currentTime = "now"|date("H") %}
+{% if currentTime >= 5 and currentTime < 12 %}
+    <p>Good morning!</p>
+{% elseif currentTime >= 12 and currentTime < 18 %}
+    <p>Good afternoon!</p>
+{% else %}
+    <p>Good evening!</p>
+{% endif %}
+```
+
+## Fallback Value
+
+Provide a default value if a contact field is empty.
+
+```twig
+<p>The Gender is {{contact.gender|default('unknown')}}</p>
+```
+
+## Magic with Dates
+
+Manipulate and format dates.
+
+```twig
+Tomorrow
+{{ "now"|date_modify('+1 day')|date("m/d/Y") }}
+
+Today
+{{ "now"|date("m/d/Y") }}
+
+Today is happy {{ "now"|date("l") }}
+```
+
+## Random Selection
+
+Choose a random item from a list.
+
+```twig
+{{ random(['apple', 'orange', 'citrus']) }}
+```
+
+## Gender-Based Proper Greeting (German Example)
+
+Customize greetings based on gender using a contact's title field.
+
+```twig
+{% if contact.title %}
+  {% if contact.title == "Frau" %}
+    <p>Sehr geehrte {{contact.title}} {{contact.lastname}}</p>
+  {% endif %}
+
+  {% if contact.title == "Herr" %}
+   <p>Sehr geehrter {{contact.title}} {{contact.lastname}}</p>
+  {% endif %}
+{% endif %}
+```
+
+## Personalize Content with JSON Decode
+
+Process JSON stored in a contact field to display personalized content like cart items or order details.
+
+```twig
+{% set cart = contact.json_field | json_decode %}
+{% for item in cart %}
+{{item.name | raw }}
+{% endfor %}
+```
+
+## Support for Email Tokens in API
+
+Use email tokens when sending emails via the API by passing them in the payload.
+
+```twig
+{{ tokens['{mycustomtoken}'] }}
+```
