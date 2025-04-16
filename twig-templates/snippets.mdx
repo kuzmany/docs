@@ -48,16 +48,15 @@ Iterate through all companies linked to the contact using `contact.companies`. T
 Iterate through and display a contact's tags.
 
 ```twig
-{% if contact.tags is not empty %}
-  <p>Your tags:</p>
-  <ul>
-  {% for tag in contact.tags %}
-      <li>{{ tag }}</li>
-  {% endfor %}
-  </ul>
+<p>Your tags:</p>
+<ul>
+{% for tag in contact.tags %}
+    <li>{{ tag }}</li>
 {% else %}
-  <p>No tags assigned.</p>
-{% endif %}
+    {# This part is shown if contact.tags is empty #}
+    <li>No tags assigned.</li>
+{% endfor %}
+</ul>
 ```
 
 ## Contact's Segments
