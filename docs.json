@@ -72,6 +72,10 @@
   },
   "navbar": {
     "links": [
+      {
+        "name": "Website",
+        "url": "https://www.mtcextendee.com/"
+      }
     ]
   },
   "footer": {
