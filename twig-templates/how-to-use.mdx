@@ -3,6 +3,7 @@ title: Using Twig Templates
 sidebarTitle: Usage
 description: Guide on how to effectively use Twig templates for Mautic personalization.
 ---
+import { Note } from '@mintlify/components';
 
 Learn how to leverage Twig templates for customizing your Mautic experience. Twig provides a powerful yet simple syntax for adding logic directly into your Mautic assets.
 
@@ -38,6 +39,14 @@ You can insert one saved Twig Template within another using a special token form
 
 Use the `{twigtemplate=TEMPLATE_NAME}` token, replacing `TEMPLATE_NAME` with the exact name of the Twig Template you created and saved in Mautic.
 
+<Note>
+  **Dynamic Template Names:** You can even use Twig tokens *within* the template name itself to dynamically select which template to insert. For example, if you have templates named `offer-gold`, `offer-silver`, etc., you could use:
+  ```twig
+  {twigtemplate=offer-{{ contact.membership_tier|default('standard') }}}
+  ```
+  This would insert the template corresponding to the contact's `membership_tier` field.
+</Note>
+
 **Example: Tier-Based Promotional Offers**
 
 Imagine you want to show different offers to contacts based on their membership level, stored in a custom field called `membership_tier`. You could create separate Twig Templates for each offer (e.g., save templates named `Gold Member Offer`, `Silver Member Offer`, `Standard Welcome Offer`).
@@ -59,4 +68,14 @@ Then, in your main email or landing page template, you can use conditional logic
 <p>Thank you for being a customer!</p>
 ```
 
-This approach makes your main template much tidier and easier to manage. If you need to update an offer, you only edit the specific saved template (e.g., `Gold Member Offer`), and the change automatically applies everywhere it's inserted. Just ensure the template names you reference exactly match those saved in your Mautic Twig Templates list.
+Alternatively, using the dynamic template name feature mentioned above, if your templates were named `offer-gold`, `offer-silver`, and `offer-standard`, you could simplify the above to:
+
+```twig
+<h2>Your Special Offer</h2>
+
+{twigtemplate=offer-{{ contact.membership_tier|default('standard') }}}
+
+<p>Thank you for being a customer!</p>
+```
+
+This approach makes your main template much tidier and easier to manage. If you need to update an offer, you only edit the specific saved template (e.g., `Gold Member Offer` or `offer-gold`), and the change automatically applies everywhere it's inserted. Just ensure the template names you reference (whether static or dynamically generated) exactly match those saved in your Mautic Twig Templates list.
