@@ -1,0 +1,57 @@
+---
+title: Twig Templates Forms Support
+description: Use Mautic form submission data directly within your Twig templates.
+---
+import { Note } from '@mintlify/components';
+
+The Twig Templates plugin allows you to access data submitted through Mautic forms directly within your email or landing page content.
+
+<Note>
+  This feature is only available when an email is sent using either:
+  *   The **"Send email to contact"** form action.
+  *   A **"Send email"** campaign action where the campaign source is a form submission.
+</Note>
+
+## Available Form Tokens
+
+When the conditions above are met, you can use these special tokens:
+
+*   `{{ formresult }}`: An object containing the data from the **most recent** form submission by the contact.
+*   `{{ formresults }}`: An array containing **all** form submission data associated with the contact.
+
+## Using the Last Form Result
+
+Access fields from the most recent submission using the `formresult` object. The field names correspond to the form field aliases.
+
+```twig
+<p>Thank you for your submission, {{ formresult.firstname }}!</p>
+<p>We have received your details:</p>
+<ul>
+  <li>First Name: {{ formresult.firstname }}</li>
+  <li>Last Name: {{ formresult.lastname }}</li>
+  <li>Email: {{ formresult.email }}</li>
+  {# Access other form fields using their alias #}
+  <li>Your Message: {{ formresult.message_field_alias }}</li>
+</ul>
+```
+
+## Using All Form Results
+
+If you need to access data from multiple submissions by the same contact, you can loop through the `formresults` array. Each item in the array is an object similar to `formresult`.
+
+```twig
+<p>Here is a history of your submissions:</p>
+<ul>
+{% for result in formresults %}
+    <li>
+        Submission on {{ result.dateSubmitted|date('Y-m-d H:i') }}:
+        First Name: {{ result.firstname }}, Last Name: {{ result.lastname }}
+        {# Add other relevant fields #}
+    </li>
+{% else %}
+    <li>No previous submissions found.</li>
+{% endfor %}
+</ul>
+```
+
+This allows you to display historical data or perform logic based on past interactions through forms.

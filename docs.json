@@ -49,7 +49,8 @@
           "twig-templates/how-to-install",
           "twig-templates/how-to-use",
           "twig-templates/snippets",
-          "twig-templates/api"
+          "twig-templates/api",
+          "twig-templates/forms-support"
         ]
       }
     ]
