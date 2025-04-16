@@ -1,57 +1,56 @@
 ---
 title: Custom Objects Support
 sidebarTitle: Custom Objects
-description: Access data from Mautic's Custom Objects within your Twig Templates.
+description: Use data from Mautic Custom Objects in your Twig Templates.
 ---
-import { Note } from '@mintlify/components';
+import { Note, Steps } from '@mintlify/components';
 
 <Note>
-  This feature requires the separate **[MauticCustomObjectsBundle](https://github.com/acquia/mc-cs-plugin-custom-objects)** plugin to be installed and enabled in your Mautic instance.
+  This feature needs the **[MauticCustomObjectsBundle](https://github.com/acquia/mc-cs-plugin-custom-objects)** plugin. Make sure it's installed and active in Mautic.
 </Note>
 
-The Twig Templates plugin allows you to access items from Mautic's Custom Objects feature directly within your templates using the `getCustomObjectItems` function. This enables powerful personalization based on related data like orders, subscriptions, event attendance, etc.
+You can show information from your Mautic Custom Objects (like orders, subscriptions, etc.) directly in your emails or landing pages using Twig Templates.
 
-## Loading Custom Object Items
+## Getting Custom Object Data
 
-Use the `getCustomObjectItems` function to retrieve an array of items belonging to a specific Custom Object.
+Use the `getCustomObjectItems` function to fetch data from a specific Custom Object.
 
 `getCustomObjectItems(alias, limit, page, orderBy, orderDirection, search, contactId)`
 
-**Parameters:**
+**What the options mean:**
 
-*   **`alias`** (string, required): The alias of the Custom Object you want to query (e.g., `'orders'`, `'products'`).
-*   **`limit`** (integer, optional): Maximum number of items to return (default: 1000).
-*   **`page`** (integer, optional): Page number for pagination (default: 1).
-*   **`orderBy`** (string, optional): Field to sort by (`'id'` or `'name'`, default: `'id'`).
-*   **`orderDirection`** (string, optional): Sort direction (`'ASC'` or `'DESC'`, default: `'ASC'`).
-*   **`search`** (string, optional): A string to search within the items (default: `null`).
-*   **`contactId`** (integer, optional): Filter items associated with a specific Mautic Contact ID (default: `null`). Use `contact.id` to filter by the current contact.
+*   **`alias`** (Required): The unique name (alias) of your Custom Object (e.g., `'orders'`).
+*   **`limit`**: How many items to get (default is 1000).
+*   **`page`**: Which page of results to get (for pagination, default is 1).
+*   **`orderBy`**: How to sort the items (`'id'` or `'name'`, default is `'id'`).
+*   **`orderDirection`**: Sort direction (`'ASC'` for A-Z, `'DESC'` for Z-A, default is `'ASC'`).
+*   **`search`**: Text to search for within the items (optional).
+*   **`contactId`**: Get items linked only to a specific contact ID. Use `contact.id` for the current contact (optional).
 
-**Return Value:**
+**What you get back:**
 
-The function returns an array of items. Each item in the array is itself an associative array containing:
-*   `id`: The ID of the Custom Object item.
-*   `name`: The name of the Custom Object item.
-*   `fields`: An associative array containing the values of the item's custom fields, keyed by the field alias (e.g., `item.fields.your_field_alias`). For 'select' type fields, the label is returned instead of the raw value.
+The function gives you a list (array) of items. Each item contains:
+*   `id`: The item's ID.
+*   `name`: The item's name.
+*   `fields`: A collection of all the custom field values for that item. You access them using their alias (e.g., `item.fields.your_field_alias`).
 
-## Accessing Item Fields
+## Using the Data
 
-Once you have loaded the items into a variable (e.g., `myItems`), you can loop through them and access their standard properties (`id`, `name`) and custom field values using the `fields` array.
+After fetching the items (e.g., `{% set myItems = getCustomObjectItems('orders') %}`), you can loop through them and show their details:
 
 ```twig
 {% for item in myItems %}
-  Item ID: {{ item.id }}
-  Item Name: {{ item.name }}
-  Custom Field Value: {{ item.fields.your_field_alias }}
+  <p>Order Name: {{ item.name }}</p>
+  <p>Order Status: {{ item.fields.status_alias }}</p> {# Example custom field #}
 {% endfor %}
 ```
 
-## Example: Displaying recent changelog entries
+## Example: Show Recent Changelog Entries
 
-This example fetches the 5 most recent items from a Custom Object named 'changelogs' and displays their details.
+Fetch the 5 newest items from a 'changelogs' Custom Object.
 
 ```twig
-{# Load the latest 5 changelog items, ordered by name descending #}
+{# Get the latest 5 changelog items, sorted by name Z-A #}
 {% set changelogs = getCustomObjectItems('changelogs', 5, 1, 'name', 'DESC') %}
 
 {% if changelogs is not empty %}
@@ -59,15 +58,13 @@ This example fetches the 5 most recent items from a Custom Object named 'changel
     <ul>
         {% for item in changelogs %}
             <li>
-                <h3>{{ item.name }}</h3> {# Access standard name property #}
+                <h3>{{ item.name }}</h3> {# Show the item's name #}
                 <p>
-                    Product: <a href="/{{ item.fields.product_alias }}"> {# Access custom field 'product_alias' #}
-                                {{ item.fields.product_alias }}
-                             </a><br/>
-                    Version: {{ item.fields.version_alias }} {# Access custom field 'version_alias' #}
+                    Product: {{ item.fields.product_alias }} <br/> {# Show 'product_alias' field #}
+                    Version: {{ item.fields.version_alias }} {# Show 'version_alias' field #}
                 </p>
                 <div>
-                    {{ item.fields.content_alias | raw }} {# Access custom field 'content_alias' #}
+                    {{ item.fields.content_alias | raw }} {# Show 'content_alias' field (allow HTML) #}
                 </div>
             </li>
         {% endfor %}
@@ -77,20 +74,20 @@ This example fetches the 5 most recent items from a Custom Object named 'changel
 {% endif %}
 ```
 
-## Example: Displaying the last order for the current contact
+## Example: Show the Current Contact's Last Order
 
-This example retrieves the single latest item from an 'orders' Custom Object that is associated with the current contact.
+Fetch the single latest order from an 'orders' Custom Object linked to the current contact.
 
 ```twig
-{% if contact.id is defined %}
-    {# Load the single latest order associated with the current contact #}
+{% if contact.id is defined %} {# Make sure we know the current contact #}
+    {# Get the 1 latest order for this contact #}
     {% set lastOrder = getCustomObjectItems('orders', 1, 1, 'id', 'DESC', null, contact.id) %}
 
     {% if lastOrder is not empty %}
-        {% set orderItem = lastOrder|first %} {# Get the first (and only) item #}
+        {% set orderItem = lastOrder|first %} {# Get the first (and only) item from the list #}
         <p>
-            Your last order number #{{ orderItem.name }} was placed on
-            {{ orderItem.fields.date_ordered_alias }}. {# Access custom field 'date_ordered_alias' #}
+            Your last order (#{{ orderItem.name }}) was placed on
+            {{ orderItem.fields.date_ordered_alias }}. {# Show 'date_ordered_alias' field #}
         </p>
     {% else %}
         <p>You have no previous orders.</p>
