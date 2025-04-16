@@ -34,26 +34,53 @@ For more examples and ready-to-use snippets, check out our [Twig Templates Snipp
 
 ## Embedding Templates
 
-You can embed one Twig Template within another using a special token format. This allows you to create reusable components or complex conditional logic structures.
+You can embed one Twig Template within another using a special token format. This allows you to create reusable components or complex conditional logic structures, keeping your main email or landing page templates cleaner.
 
 Use the `{twigtemplate=TEMPLATE_NAME}` token, replacing `TEMPLATE_NAME` with the exact name of the Twig Template you created in Mautic.
 
-**Example: Gender-Based Greeting Snippets**
+**Example: Tier-Based Promotional Offers**
 
-Imagine you have two separate Twig Templates saved:
-*   `helloM` containing: `Hello Mr. {{ contact.lastname }}`
-*   `helloW` containing: `Hello Ms. {{ contact.lastname }}`
+Imagine you want to show different offers to contacts based on their membership level, stored in a custom field called `membership_tier`. You could create separate Twig Templates for each offer:
 
-You can then use conditional logic in your main email or landing page template to embed the correct greeting:
+*   **Template Name:** `Gold Member Offer`
+    ```twig
+    <div style="border: 2px solid gold; padding: 10px;">
+      <h3>Exclusive Gold Member Discount!</h3>
+      <p>As a valued Gold Member, enjoy 25% off your next purchase!</p>
+      <p>Use code: GOLD25</p>
+    </div>
+    ```
+*   **Template Name:** `Silver Member Offer`
+    ```twig
+    <div style="border: 1px solid silver; padding: 10px;">
+      <h4>Silver Member Special</h4>
+      <p>Get 15% off your next order as a thank you!</p>
+      <p>Use code: SILVER15</p>
+    </div>
+    ```
+*   **Template Name:** `Standard Welcome Offer`
+    ```twig
+    <div style="border: 1px dashed #ccc; padding: 10px;">
+      <p>Welcome! Enjoy 10% off your first purchase.</p>
+      <p>Use code: WELCOME10</p>
+    </div>
+    ```
+
+Now, in your main email or landing page template, you can use conditional logic to embed the correct offer based on the contact's `membership_tier` field:
 
 ```twig
-{% if contact.gender == 'm' %}
-  {twigtemplate=helloM}
-{% elseif contact.gender == 'w' %}
-  {twigtemplate=helloW}
+<h2>Your Special Offer</h2>
+
+{% if contact.membership_tier == 'gold' %}
+  {twigtemplate=Gold Member Offer}
+{% elseif contact.membership_tier == 'silver' %}
+  {twigtemplate=Silver Member Offer}
 {% else %}
-  Hello {{ contact.firstname|default('there') }}! {# Fallback greeting #}
+  {# Default offer for standard members or if tier is not set #}
+  {twigtemplate=Standard Welcome Offer}
 {% endif %}
+
+<p>Thank you for being a customer!</p>
 ```
 
-This approach keeps your main templates cleaner and makes managing reusable snippets easier. Just ensure the templates you reference (`helloM`, `helloW`) exist in your Mautic Twig Templates list.
+This approach makes your main template much tidier and easier to manage. If you need to update an offer, you only edit the specific offer template (e.g., `Gold Member Offer`), and the change automatically applies wherever it's embedded. Just ensure the template names you reference exactly match those saved in your Mautic Twig Templates list.
