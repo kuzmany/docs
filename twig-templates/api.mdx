@@ -1,0 +1,50 @@
+---
+title: Twig Templates API Support
+description: Manage your Mautic Twig Templates programmatically using the API endpoints.
+---
+
+Manage your Twig Templates via the Mautic API. This allows for programmatic creation, retrieval, updating, and deletion of templates.
+
+## API Endpoints
+
+Here are the available endpoints for managing Twig Templates:
+
+### Get List of Twig Templates
+Retrieves a list of all available Twig Templates.
+
+- **Endpoint:** `GET /api/twigTemplates`
+- **Response:** A JSON array containing the Twig Templates.
+
+### Get a Specific Twig Template
+Retrieves the details of a single Twig Template by its ID.
+
+- **Endpoint:** `GET /api/twigTemplates/{templateId}`
+- **Parameters:**
+    - `{templateId}` (integer, required): The ID of the template to retrieve.
+- **Response:** A JSON object representing the specified Twig Template.
+
+### Create a Twig Template
+Creates a new Twig Template.
+
+- **Endpoint:** `POST /api/twigTemplates/new`
+- **Request Body:** A JSON object containing the data for the new template (e.g., name, content).
+- **Response:** A JSON object representing the newly created Twig Template.
+
+### Edit a Twig Template
+Updates an existing Twig Template. If the specified template ID does not exist, a new template might be created (verify this behavior).
+
+- **Endpoint:** `PATCH /api/twigTemplates/{templateId}/edit`
+- **Parameters:**
+    - `{templateId}` (integer, required): The ID of the template to edit.
+- **Request Body:** A JSON object containing the fields to update.
+- **Response:** A JSON object representing the updated Twig Template.
+
+### Delete a Twig Template
+Deletes a specific Twig Template by its ID.
+
+- **Endpoint:** `DELETE /api/twigTemplates/{templateId}/delete`
+- **Parameters:**
+    - `{templateId}` (integer, required): The ID of the template to delete.
+- **Response:** A success status or confirmation message.
+
+*Note: Ensure you have the necessary API permissions configured in Mautic to use these endpoints.*
