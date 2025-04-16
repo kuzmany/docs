@@ -39,14 +39,6 @@ You can insert one saved Twig Template within another using a special token form
 
 Use the `{twigtemplate=TEMPLATE_NAME}` token, replacing `TEMPLATE_NAME` with the exact name of the Twig Template you created and saved in Mautic.
 
-<Note>
-  **Dynamic Template Names:** You can even use Twig tokens *within* the template name itself to dynamically select which template to insert. For example, if you have templates named `offer-gold`, `offer-silver`, etc., you could use:
-  ```twig
-  {twigtemplate=offer-{{ contact.membership_tier|default('standard') }}}
-  ```
-  This would insert the template corresponding to the contact's `membership_tier` field.
-</Note>
-
 **Example: Tier-Based Promotional Offers**
 
 Imagine you want to show different offers to contacts based on their membership level, stored in a custom field called `membership_tier`. You could create separate Twig Templates for each offer (e.g., save templates named `Gold Member Offer`, `Silver Member Offer`, `Standard Welcome Offer`).
@@ -68,14 +60,25 @@ Then, in your main email or landing page template, you can use conditional logic
 <p>Thank you for being a customer!</p>
 ```
 
-Alternatively, using the dynamic template name feature mentioned above, if your templates were named `offer-gold`, `offer-silver`, and `offer-standard`, you could simplify the above to:
+This approach makes your main template much tidier and easier to manage. If you need to update an offer, you only edit the specific saved template (e.g., `Gold Member Offer`), and the change automatically applies everywhere it's inserted. Just ensure the template names you reference exactly match those saved in your Mautic Twig Templates list.
+
+## Using Dynamic Template Names
+
+For even more flexibility, you can use Twig tokens *within* the template name itself inside the `{twigtemplate=...}` token. This allows you to dynamically select which template to insert based on contact data or other logic, often simplifying your main template.
+
+**Example: Simplified Tier-Based Offers**
+
+Following the previous example, if you named your saved templates consistently based on the membership tier (e.g., `offer-gold`, `offer-silver`, `offer-standard`), you could replace the `if/elseif/else` block with a single dynamic token:
 
 ```twig
 <h2>Your Special Offer</h2>
 
+{# Dynamically inserts 'offer-gold', 'offer-silver', or 'offer-standard' #}
 {twigtemplate=offer-{{ contact.membership_tier|default('standard') }}}
 
 <p>Thank you for being a customer!</p>
 ```
 
-This approach makes your main template much tidier and easier to manage. If you need to update an offer, you only edit the specific saved template (e.g., `Gold Member Offer` or `offer-gold`), and the change automatically applies everywhere it's inserted. Just ensure the template names you reference (whether static or dynamically generated) exactly match those saved in your Mautic Twig Templates list.
+This code achieves the same result as the conditional example above but is more concise. Mautic will evaluate the Twig inside the token (`{{ contact.membership_tier|default('standard') }}`) first, determine the resulting template name (e.g., `offer-gold`), and then insert the content of that specific saved Twig Template.
+
+Make sure the dynamically generated names perfectly match the names of your saved Twig Templates.
