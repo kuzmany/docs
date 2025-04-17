@@ -11,8 +11,8 @@
     "dark": "#1D4ED8"
   },
   "typography": {
-    "font": "Inter",
-    "headings": "Montserrat"
+    "font": "Open Sans",
+    "headings": "Open Sans"
   },
   "modeToggle": {
     "default": "dark"
