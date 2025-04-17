@@ -59,6 +59,13 @@
           "twig-templates/api"
         ]
       }
+    ],
+      {
+        "tab": "Customizer Plugin",
+        "pages": [
+          "plugins/mautic-customizer/introduction"
+        ]
+      }
     ]
   },
   "logo": {
