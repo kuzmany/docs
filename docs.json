@@ -34,6 +34,9 @@
       "letterSpacing": {
         "h1": "-0.02em"
       }
+    },
+    "tabs": {
+      "fontSize": "1.25rem"
     }
   },
   "navigation": {
