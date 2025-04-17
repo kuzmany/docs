@@ -48,6 +48,7 @@
         "tab": "Home",
         "pages": [
           "homepage",
+          "upgrades-policy",
           "changelog"
         ]
       },
