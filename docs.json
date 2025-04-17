@@ -68,8 +68,7 @@
       {
         "tab": "Customizer Plugin",
         "pages": [
-          "plugins/mautic-customizer/introduction",
-          "plugins/mautic-customizer/buy"
+          "plugins/mautic-customizer/introduction"
         ]
       },
       {
