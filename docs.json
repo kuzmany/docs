@@ -36,6 +36,9 @@
       }
     },
     "tabs": {
+      "fontSize": "1.5rem"
+    },
+    "navigation": {
       "fontSize": "1.25rem"
     }
   },
