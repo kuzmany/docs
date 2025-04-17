@@ -77,7 +77,23 @@
       "label": "mtcextendee.com",
       "href": "https://mtcextendee.com/"
     },
-    "links": []
+    "links": [
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "mailto:support@mtcextendee.com"
+      },
+      {
+        "type": "link",
+        "label": "Bug Report",
+        "href": "mailto:support@mtcextendee.com"
+      },
+      {
+        "type": "link",
+        "label": "Feature Request",
+        "href": "mailto:support@mtcextendee.com"
+      }
+    ]
   },
   "footer": {
     "socials": {
