@@ -58,8 +58,7 @@
           "twig-templates/embedding-externally",
           "twig-templates/api"
         ]
-      }
-    ],
+      },
       {
         "tab": "Customizer Plugin",
         "pages": [
