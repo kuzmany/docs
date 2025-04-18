@@ -6,69 +6,157 @@ description: API endpoints for the Multiple Transport Plugin.
 
 You can manage transports, assign them to emails or users, and test sending via the API.
 
+### Authentication
+
+All API requests require authentication.  
+Use your Mautic API credentials or token.  
+See [Mautic API docs](https://developer.mautic.org/#authentication) for details.
+
 ### List All Transports
 
-```
+```http
 GET /api/multipleTransports
 ```
-
 Returns a list of all transport configurations.
+
+**Example response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Amazon SES",
+    "mailerDsn": "ses+smtp://KEY:SECRET@default",
+    "isPublished": true
+  }
+]
+```
 
 ### Get a Single Transport
 
-```
+```http
 GET /api/multipleTransports/{id}
 ```
-
 Returns details for a specific transport.
+
+**Example response:**
+```json
+{
+  "id": 1,
+  "name": "Amazon SES",
+  "mailerDsn": "ses+smtp://KEY:SECRET@default",
+  "isPublished": true
+}
+```
 
 ### Create a New Transport
 
-```
+```http
 POST /api/multipleTransports/new
 ```
-
 Send a JSON body with fields like `name`, `description`, `mailerDsn`, `testedEmailFrom`, `isPublished`.
+
+**Example request:**
+```json
+{
+  "name": "Sendgrid",
+  "description": "Sendgrid SMTP",
+  "mailerDsn": "smtp://apikey:SG.xxxxx@default",
+  "testedEmailFrom": "me@example.com",
+  "isPublished": true
+}
+```
+
+**Example response:**
+```json
+{
+  "id": 2,
+  "name": "Sendgrid",
+  "isPublished": true
+}
+```
 
 ### Update a Transport
 
-```
+```http
 PATCH /api/multipleTransports/{id}/edit
 ```
-
 Send a JSON body with the fields you want to update.
+
+**Example request:**
+```json
+{
+  "name": "Sendgrid Updated"
+}
+```
 
 ### Delete a Transport
 
-```
+```http
 DELETE /api/multipleTransports/{id}/delete
 ```
-
 Deletes a transport.
+
+**Example response:**
+```json
+{
+  "success": true
+}
+```
 
 ### Assign Transport to Email
 
-```
+```http
 POST /api/multipleTransport/transportEmail/{emailId}
 ```
-
 Parameters:
 - `transportId`: ID of the transport to use
 - `useOwnerTransport`: true/false
 
+**Example request:**
+```json
+{
+  "transportId": 2,
+  "useOwnerTransport": false
+}
+```
+
 ### Assign Transport to User
 
-```
+```http
 POST /api/multipleTransport/transportUser/{userId}
 ```
-
 Parameter:
 - `transportId`: ID of the transport to use
 
+**Example request:**
+```json
+{
+  "transportId": 2
+}
+```
+
 ### Test a Transport
 
-```
+```http
 POST /api/multipleTransports/send/test/{id}
 ```
-
 Sends a test email using the selected transport.
+
+**Example response:**
+```json
+{
+  "success": true,
+  "message": "Test email sent"
+}
+```
+
+### Error Responses
+
+If you use an invalid ID or missing parameters, you may get an error like:
+
+```json
+{
+  "success": false,
+  "error": "Transport not found"
+}
+```

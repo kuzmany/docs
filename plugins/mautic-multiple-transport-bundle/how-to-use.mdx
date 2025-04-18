@@ -4,6 +4,11 @@ description: How to use the Multiple Transport Plugin in Mautic.
 
 ## How to Use
 
+### Before you start
+
+- Make sure you have at least one transport configured in the "Multiple Transport" section.
+- If you change a transport and it doesn't work, try clearing the Mautic cache.
+
 ### Assign a Transport to an Email
 
 1. Go to the email edit screen in Mautic.
@@ -30,6 +35,17 @@ description: How to use the Multiple Transport Plugin in Mautic.
 3. Fill in the details (name, DSN, etc).
 4. Save.
 
+### Remove or Reset a Transport
+
+- To remove a transport from an email or user, set the dropdown to blank and save.
+- If no transport is set, Mautic will use the default transport.
+
 ### Test a Transport
 
 - Use the "Test" button when editing a transport to send a test email and check if it works.
+
+### Troubleshooting
+
+- If a transport is not working, double-check the DSN and credentials.
+- If changes are not applied, clear the Mautic cache.
+- Make sure you have permission to manage transports.
