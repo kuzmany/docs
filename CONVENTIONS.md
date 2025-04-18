@@ -21,5 +21,3 @@ If page use description, then to not use same first sentence in content.
 - **Tabs**: Switch between different content in tabs.
 - **Tooltips**: Show info when hovering over text.
 - **Update**: Show changelogs or updates.
-
-See [Mintlify docs](https://mintlify.com/docs/content/components) for details and examples.
