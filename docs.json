@@ -59,8 +59,8 @@
         "pages": [
           "plugins/mautic-multiple-transport-bundle/introduction",
           "plugins/mautic-multiple-transport-bundle/how-to-use",
-          "plugins/mautic-multiple-transport-bundle/api-reference",
-          "plugins/mautic-multiple-transport-bundle/faq"
+          "plugins/mautic-multiple-transport-bundle/faq",
+          "plugins/mautic-multiple-transport-bundle/api-reference"
         ]
       },
       {
