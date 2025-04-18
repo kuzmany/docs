@@ -87,7 +87,8 @@
         "tab": "Auto Tagger Plugin",
         "pages": [
           "plugins/mautic-auto-tagger-bundle/introduction",
-          "plugins/mautic-auto-tagger-bundle/settings"
+          "plugins/mautic-auto-tagger-bundle/settings",
+          "plugins/mautic-auto-tagger-bundle/faq"
         ]
       }
     ]
