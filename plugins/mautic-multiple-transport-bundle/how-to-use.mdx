@@ -2,50 +2,57 @@
 description: How to use the Multiple Transport Plugin in Mautic.
 ---
 
-## How to Use
+<Callout type="note" emoji="🛠️">
+  <b>Before you start:</b>  
+  Add at least one transport in the "Multiple Transport" section. If something doesn't work, try clearing the Mautic cache.
+</Callout>
 
-### Before you start
+<Steps>
+  <Step title="Assign a Transport to an Email">
+    <ol>
+      <li>Open the email edit screen in Mautic.</li>
+      <li>Find the "Transport" dropdown.</li>
+      <li>Pick the transport you want for this email.</li>
+      <li>Save the email.</li>
+    </ol>
+  </Step>
+  <Step title="Use Contact Owner's Transport">
+    <ol>
+      <li>In the email edit screen, turn on "Use Owner Custom Transport".</li>
+      <li>The email will use the transport set for the contact's owner (user).</li>
+    </ol>
+  </Step>
+  <Step title="Assign a Transport to a User">
+    <ol>
+      <li>Go to the user profile edit screen.</li>
+      <li>Find the "Transport" dropdown.</li>
+      <li>Pick the transport for this user.</li>
+      <li>Save the user.</li>
+    </ol>
+  </Step>
+  <Step title="Add or Edit Transports">
+    <ol>
+      <li>Go to the "Multiple Transport" section in the Mautic admin menu.</li>
+      <li>Click "New" to add a transport, or edit an existing one.</li>
+      <li>Fill in the details (name, DSN, etc).</li>
+      <li>Save.</li>
+    </ol>
+  </Step>
+  <Step title="Remove or Reset a Transport">
+    <ul>
+      <li>To remove a transport from an email or user, set the dropdown to blank and save.</li>
+      <li>If no transport is set, Mautic will use the default transport.</li>
+    </ul>
+  </Step>
+  <Step title="Test a Transport">
+    <ul>
+      <li>When editing a transport, use the "Test" button to send a test email and check if it works.</li>
+    </ul>
+  </Step>
+</Steps>
 
-- Make sure you have at least one transport configured in the "Multiple Transport" section.
-- If you change a transport and it doesn't work, try clearing the Mautic cache.
-
-### Assign a Transport to an Email
-
-1. Go to the email edit screen in Mautic.
-2. You will see a new "Transport" dropdown.
-3. Select the transport you want for this email.
-4. Save the email.
-
-### Use Contact Owner's Transport
-
-1. In the email edit screen, enable "Use Owner Custom Transport".
-2. The email will use the transport assigned to the contact's owner (user), if set.
-
-### Assign a Transport to a User
-
-1. Go to the user profile edit screen.
-2. You will see a "Transport" dropdown.
-3. Select the transport for this user.
-4. Save the user.
-
-### Add or Edit Transports
-
-1. Go to the "Multiple Transport" section in the Mautic admin menu.
-2. Click "New" to add a transport, or edit an existing one.
-3. Fill in the details (name, DSN, etc).
-4. Save.
-
-### Remove or Reset a Transport
-
-- To remove a transport from an email or user, set the dropdown to blank and save.
-- If no transport is set, Mautic will use the default transport.
-
-### Test a Transport
-
-- Use the "Test" button when editing a transport to send a test email and check if it works.
-
-### Troubleshooting
-
-- If a transport is not working, double-check the DSN and credentials.
-- If changes are not applied, clear the Mautic cache.
-- Make sure you have permission to manage transports.
+<Callout type="tip" emoji="💡">
+  If a transport is not working, double-check the DSN and credentials.  
+  If changes are not applied, clear the Mautic cache.  
+  Make sure you have permission to manage transports.
+</Callout>

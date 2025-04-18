@@ -2,25 +2,56 @@
 description: API endpoints for the Multiple Transport Plugin.
 ---
 
-## API Reference
+<Callout type="note" emoji="🔑">
+  All API requests need authentication.  
+  Use your Mautic API credentials or token.  
+  See <a href="https://developer.mautic.org/#authentication" target="_blank">Mautic API docs</a> for details.
+</Callout>
 
-You can manage transports, assign them to emails or users, and test sending via the API.
+<CardGroup>
+  <Card title="List All Transports" icon="list">
+    <Code language="http">GET /api/multipleTransports</Code>
+    <small>Get all transport settings.</small>
+  </Card>
+  <Card title="Get a Single Transport" icon="search">
+    <Code language="http">GET /api/multipleTransports/{id}</Code>
+    <small>Get details for one transport.</small>
+  </Card>
+  <Card title="Create a New Transport" icon="plus">
+    <Code language="http">POST /api/multipleTransports/new</Code>
+    <small>Add a new transport.</small>
+  </Card>
+  <Card title="Update a Transport" icon="edit">
+    <Code language="http">PATCH /api/multipleTransports/{id}/edit</Code>
+    <small>Change a transport.</small>
+  </Card>
+  <Card title="Delete a Transport" icon="trash">
+    <Code language="http">DELETE /api/multipleTransports/{id}/delete</Code>
+    <small>Remove a transport.</small>
+  </Card>
+  <Card title="Assign to Email" icon="mail">
+    <Code language="http">POST /api/multipleTransport/transportEmail/{emailId}</Code>
+    <small>Set a transport for an email.</small>
+  </Card>
+  <Card title="Assign to User" icon="user">
+    <Code language="http">POST /api/multipleTransport/transportUser/{userId}</Code>
+    <small>Set a transport for a user.</small>
+  </Card>
+  <Card title="Test a Transport" icon="check">
+    <Code language="http">POST /api/multipleTransports/send/test/{id}</Code>
+    <small>Send a test email.</small>
+  </Card>
+</CardGroup>
 
-### Authentication
-
-All API requests require authentication.  
-Use your Mautic API credentials or token.  
-See [Mautic API docs](https://developer.mautic.org/#authentication) for details.
+---
 
 ### List All Transports
 
-```http
-GET /api/multipleTransports
-```
-Returns a list of all transport configurations.
+<Code title="Get all transports" language="http">GET /api/multipleTransports</Code>
 
-**Example response:**
-```json
+Returns a list of all transport settings.
+
+<Code title="Example response" language="json" expand>
 [
   {
     "id": 1,
@@ -29,34 +60,32 @@ Returns a list of all transport configurations.
     "isPublished": true
   }
 ]
-```
+</Code>
+
+---
 
 ### Get a Single Transport
 
-```http
-GET /api/multipleTransports/{id}
-```
-Returns details for a specific transport.
+<Code title="Get one transport" language="http">GET /api/multipleTransports/{id}</Code>
 
-**Example response:**
-```json
+<Code title="Example response" language="json" expand>
 {
   "id": 1,
   "name": "Amazon SES",
   "mailerDsn": "ses+smtp://KEY:SECRET@default",
   "isPublished": true
 }
-```
+</Code>
+
+---
 
 ### Create a New Transport
 
-```http
-POST /api/multipleTransports/new
-```
-Send a JSON body with fields like `name`, `description`, `mailerDsn`, `testedEmailFrom`, `isPublished`.
+<Code title="Create transport" language="http">POST /api/multipleTransports/new</Code>
 
-**Example request:**
-```json
+Send a JSON body like:
+
+<Code title="Example request" language="json" expand>
 {
   "name": "Sendgrid",
   "description": "Sendgrid SMTP",
@@ -64,99 +93,91 @@ Send a JSON body with fields like `name`, `description`, `mailerDsn`, `testedEma
   "testedEmailFrom": "me@example.com",
   "isPublished": true
 }
-```
+</Code>
 
-**Example response:**
-```json
+<Code title="Example response" language="json" expand>
 {
   "id": 2,
   "name": "Sendgrid",
   "isPublished": true
 }
-```
+</Code>
+
+---
 
 ### Update a Transport
 
-```http
-PATCH /api/multipleTransports/{id}/edit
-```
-Send a JSON body with the fields you want to update.
+<Code title="Update transport" language="http">PATCH /api/multipleTransports/{id}/edit</Code>
 
-**Example request:**
-```json
+Send a JSON body with the fields you want to change.
+
+<Code title="Example request" language="json" expand>
 {
   "name": "Sendgrid Updated"
 }
-```
+</Code>
+
+---
 
 ### Delete a Transport
 
-```http
-DELETE /api/multipleTransports/{id}/delete
-```
-Deletes a transport.
+<Code title="Delete transport" language="http">DELETE /api/multipleTransports/{id}/delete</Code>
 
-**Example response:**
-```json
+<Code title="Example response" language="json" expand>
 {
   "success": true
 }
-```
+</Code>
+
+---
 
 ### Assign Transport to Email
 
-```http
-POST /api/multipleTransport/transportEmail/{emailId}
-```
-Parameters:
-- `transportId`: ID of the transport to use
-- `useOwnerTransport`: true/false
+<Code title="Assign to email" language="http">POST /api/multipleTransport/transportEmail/{emailId}</Code>
 
-**Example request:**
-```json
+Send a JSON body:
+
+<Code title="Example request" language="json" expand>
 {
   "transportId": 2,
   "useOwnerTransport": false
 }
-```
+</Code>
+
+---
 
 ### Assign Transport to User
 
-```http
-POST /api/multipleTransport/transportUser/{userId}
-```
-Parameter:
-- `transportId`: ID of the transport to use
+<Code title="Assign to user" language="http">POST /api/multipleTransport/transportUser/{userId}</Code>
 
-**Example request:**
-```json
+<Code title="Example request" language="json" expand>
 {
   "transportId": 2
 }
-```
+</Code>
+
+---
 
 ### Test a Transport
 
-```http
-POST /api/multipleTransports/send/test/{id}
-```
-Sends a test email using the selected transport.
+<Code title="Test transport" language="http">POST /api/multipleTransports/send/test/{id}</Code>
 
-**Example response:**
-```json
+<Code title="Example response" language="json" expand>
 {
   "success": true,
   "message": "Test email sent"
 }
-```
+</Code>
+
+---
 
 ### Error Responses
 
 If you use an invalid ID or missing parameters, you may get an error like:
 
-```json
+<Code title="Example error" language="json" expand>
 {
   "success": false,
   "error": "Transport not found"
 }
-```
+</Code>

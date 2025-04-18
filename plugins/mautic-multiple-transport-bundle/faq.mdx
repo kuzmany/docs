@@ -2,31 +2,32 @@
 description: Frequently asked questions about the Multiple Transport Plugin.
 ---
 
-## FAQ
-
-**How can I send emails with the contact owner's transport?**  
-Assign a transport to the user (owner) in their profile. Then, in the email settings, enable "Use Owner Custom Transport".
-
-**Can I use a different transport other than SMTP?**  
-Yes, you can use any transport supported by Mautic, such as SMTP, Amazon SES, Mailjet, Sendgrid, and more.
-
-**How do I test if a transport works?**  
-Edit the transport and click the "Test" button. A test email will be sent.
-
-**What happens if no transport is set for an email or user?**  
-Mautic will use the default transport from your main configuration.
-
-**Is this plugin compatible with all Mautic versions?**  
-Yes, it works with Mautic 4 (SMTP only), and Mautic 5/6 (all transports).
-
-**I changed a transport but it’s not used, what should I do?**  
-Clear the Mautic cache. Sometimes changes require a cache clear to take effect.
-
-**Who can manage transports?**  
-Only users with the right permissions in Mautic can add, edit, or delete transports.
-
-**Can I assign a transport to multiple emails or users at once?**  
-Currently, you need to assign transports one by one.
-
-**What if I get an error when sending?**  
-Check your DSN, credentials, and try sending a test email. See the Troubleshooting page for more help.
+<AccordionGroup>
+  <Accordion title="How can I send emails with the contact owner's transport?">
+    Assign a transport to the user (owner) in their profile. Then, in the email settings, turn on "Use Owner Custom Transport".
+  </Accordion>
+  <Accordion title="Can I use a different transport other than SMTP?">
+    Yes, you can use any transport supported by Mautic, like SMTP, Amazon SES, Mailjet, Sendgrid, and more.
+  </Accordion>
+  <Accordion title="How do I test if a transport works?">
+    Edit the transport and click the "Test" button. A test email will be sent.
+  </Accordion>
+  <Accordion title="What happens if no transport is set for an email or user?">
+    Mautic will use the default transport from your main configuration.
+  </Accordion>
+  <Accordion title="Is this plugin compatible with all Mautic versions?">
+    Yes, it works with Mautic 4 (SMTP only), and Mautic 5/6 (all transports).
+  </Accordion>
+  <Accordion title="I changed a transport but it’s not used, what should I do?">
+    Clear the Mautic cache. Sometimes changes require a cache clear to take effect.
+  </Accordion>
+  <Accordion title="Who can manage transports?">
+    Only users with the right permissions in Mautic can add, edit, or delete transports.
+  </Accordion>
+  <Accordion title="Can I assign a transport to multiple emails or users at once?">
+    Right now, you need to assign transports one by one.
+  </Accordion>
+  <Accordion title="What if I get an error when sending?">
+    Check your DSN, credentials, and try sending a test email. If you still have trouble, check your Mautic logs or ask for help.
+  </Accordion>
+</AccordionGroup>
