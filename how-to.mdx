@@ -4,27 +4,31 @@ description: Step-by-step guide for buying, installing, and upgrading Mautic Ext
 sidebarTitle: How to
 ---
 
+<Callout type="success">
+  <b>Quick and easy!</b> Follow these simple steps to get your new plugin up and running in Mautic.
+</Callout>
+
 <Steps>
-  <Step title="Buy app directly from website">
-    Buy from our <a href="https://mtcextendee.com/" target="_blank" rel="noopener">mtcextendee.com</a>.<br />
+  <Step title="Buy from our website">
+    Visit <a href="https://mtcextendee.com/" target="_blank" rel="noopener"><b>mtcextendee.com</b></a> and choose your plugin.<br />
     All plugins are from trusted Mautic community developers.<br />
-    We provide fast support, usually within 24 hours.
+    Our support team is here to help, usually within 24 hours.
   </Step>
-  <Step title="Receive download link, license key, and install manually">
-    After purchase, you will get a download link and license key.<br />
-    Install the package manually.<br />
+  <Step title="Get your download link and license key">
+    After purchase, you’ll receive a download link and license key by email.<br />
     <Callout type="info">
-      <b>Note:</b> The download link always gives you access to the latest version of the plugin, forever.
+      <b>Tip:</b> The download link always gives you access to the latest version of your plugin, forever.
     </Callout>
+    Download the plugin and keep your license key safe.
   </Step>
-  <Step title="Copy the plugin to plugins/YourBundleName">
-    Copy the plugin folder to your Mautic <code>plugins/</code> directory.
+  <Step title="Install the plugin">
+    Unzip the downloaded file (if needed) and copy the plugin folder to your Mautic <code>plugins/</code> directory.
   </Step>
-  <Step title="Clear cache">
-    Run:<br />
+  <Step title="Clear the cache">
+    In your Mautic root folder, run:<br />
     <code>php bin/console cache:clear</code>
   </Step>
-  <Step title="Refresh plugin list">
+  <Step title="Reload the plugin list">
     Run:<br />
     <code>php bin/console mautic:plugins:reload</code>
   </Step>
@@ -32,7 +36,8 @@ sidebarTitle: How to
     Run:<br />
     <code>php bin/console mautic:assets:generate</code>
   </Step>
-  <Step title="It's done">
-    Your plugin is ready to use!
+  <Step title="All done!">
+    Your plugin is now installed and ready to use.<br />
+    Enjoy the new features!
   </Step>
 </Steps>
