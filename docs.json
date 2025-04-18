@@ -71,12 +71,6 @@
         "pages": [
           "plugins/mautic-customizer/introduction"
         ]
-      },
-      {
-        "tab": "Upgrades Policy",
-        "pages": [
-          "upgrades-policy"
-        ]
       }
     ]
   },
