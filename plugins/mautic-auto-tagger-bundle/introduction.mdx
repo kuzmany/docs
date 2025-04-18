@@ -1,97 +1,114 @@
-# Automatic UTM Tagger Plugin for Mautic
+# Mautic Auto Tagger Plugin
 
-UTM tagging on autopilot
+UTM tagging on autopilot for Mautic 4, 5, and 6.
 
-> Compatible with **Mautic 4**, **Mautic 5**, and **Mautic 6**
-
-[Buy Now](http://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/single)
+> **Compatible with Mautic 4, 5, and 6**
 
 ---
 
-## Automatically add UTM tags to your content
+## Overview
 
-Save time and ensure consistent UTM tagging across your emails, dynamic content, and focus items.
+The Mautic Auto Tagger Bundle automatically adds UTM parameters and custom tags to links in emails, dynamic content, and focus items. It supports pre-filling UTM tags when creating new entities and dynamic token replacement based on entity properties.
 
 ---
 
-## Main Features
+## Features
 
-- **Set up once predefined tags** for emails, dynamic content, or focus items
-- **Saves your time** and say goodbye to the UTM tagging headache
-- **Tokens support** for tags with transliterate option
-- **Custom tags** automatically add any parameter
+- **Automatic UTM Tagging:** Appends UTM tags to links in emails, dynamic content, and focus items if not already present.
+- **Pre-fill UTM Tags:** Default UTM tags are pre-filled when creating new emails, dynamic content, or focus items.
+- **Custom Tags:** Add any custom key-value parameters to your links.
+- **Token Support:** Use tokens to dynamically insert values from Mautic entities (e.g., email name, campaign ID, contact fields).
+- **Transliteration:** Use the `|transliterate` modifier to generate URL-safe, ASCII versions of token values.
+- **Channel-specific Settings:** Configure tags for each channel (Email, Dynamic Content, Focus) independently.
+- **Does not override existing UTM tags:** If a link already has UTM parameters, the plugin will not overwrite them.
+
+---
+
+## How It Works
+
+- **Automatic Appending:** When enabled, the plugin scans links before they are used. If a link lacks UTM parameters, the plugin appends the configured default UTM tags and any relevant custom tags for that channel. Tokens in tags are replaced with values from the relevant entity.
+- **Pre-filling Tags:** When enabled, creating a new Email, Dynamic Content, or Focus Item will automatically populate the UTM tag fields with the defaults.
+- **Custom Tags:** Define any number of custom key-value pairs (e.g., `my_param=value`, `tracker={campaignfield=id}`) that support tokens.
+- **Priority:** Existing UTM parameters are not overridden. Custom tags are added if their keys do not conflict.
+
+---
+
+## Using Tokens
+
+Tokens allow you to dynamically insert values from Mautic entities into your UTM or custom tags.
+
+- `{contactfield=alias}`: For contact fields (e.g., `{contactfield=firstname}`)
+- `{emailfield=property}`: For email properties (e.g., `{emailfield=name}`)
+- `{dynamiccontentfield=property}`: For dynamic content properties
+- `{focusfield=property}`: For focus item properties
+- `{campaignfield=property}`: For campaign properties
+- `{eventfield=property}`: For campaign event properties
+
+**Transliteration:**  
+Add `|transliterate` to a token to get a URL-safe, ASCII version.  
+Example: `{emailfield=name|transliterate}`
+
+---
+
+## Example Use Case
+
+1. **Configure:** In plugin settings under "Tags for emails", set:
+    - `utm_source`: `mautic`
+    - `utm_medium`: `email`
+    - `utm_campaign`: `{campaignfield=name|transliterate}`
+    - `utm_content`: `{emailfield=name|transliterate}`
+    - Custom Tag: `channel=email`
+2. **Enable:** Check "Automatically append UTM parameters to URLs if not exist".
+3. **Create:** Create an email named "Summer Sale" in a campaign named "Q3 Promotions" with a link `https://my-shop.com/products`.
+4. **Send:** The link will be transformed to:  
+   `https://my-shop.com/products?utm_source=mautic&utm_medium=email&utm_campaign=Q3-Promotions&utm_content=Summer-Sale&channel=email`
+
+---
+
+## Installation
+
+1. Copy the plugin to `plugins/MauticAutoTaggerBundle`
+2. Clear cache:  
+   `php bin/console cache:clear`
+3. Reload plugins list:  
+   `php bin/console mautic:plugins:reload`
+4. Re-generate assets:  
+   `php bin/console mautic:assets:generate`
 
 ---
 
 ## FAQ
 
-### Can I still personalize my UTM tags?
+### Can I personalize my UTM tags?
 
-Sure can! Set them on each channel.
+Yes! You can set them per channel and use tokens for dynamic values.
 
-### Automatically add UTM tags during creating new form
+### What if I already have UTM tags on some links?
 
-This option automatically fills in UTM tag fields when creating a new email, dynamic content, or focus item.
+The plugin will not override existing UTM parameters.
 
-### Which tokens can you support?
+### Which tokens are supported?
 
-You can utilize tokens linked to an entity, such as email ID, name, subject, or category. Additionally, you have the option to use any contact field tokens, similar to how it’s done in the builder.
+Tokens for entity properties (email, campaign, contact, etc.) and all contact fields.
 
-### What if I’ve already put UTM tags on some links?
+### What does "Automatically add UTM tags during creating new form" do?
 
-No worries. If there’s a tag already, the plugin will leave it be.
+It pre-fills UTM tag fields when creating a new email, dynamic content, or focus item.
 
-### Automatically append UTM parameters to URLs if not exist
+### What does "Automatically append UTM parameters to URLs if not exist" do?
 
-This option automatically adds UTM tags if you don’t set them up while creating a new one. This way, you can always be sure that your UTM exists.
-
----
-
-## How to install plugin
-
-Once you receive a confirmation email, you can download the latest version of each bundle using the provided link.
-
-1. Copy the plugin to `plugins/YourBundleName`
-2. Clear cache: run from console `php bin/console cache:clear`
-3. Reload plugins list: Run `php bin/console mautic:plugins:reload`
-4. Re-generate assets: Run `php bin/console mautic:assets:generate`
-
----
-
-## Special Offers
-
-Enjoy a 20% discount with our special offers for **legacy customers**, those who upgrade to Mautic 5, or purchase more than one plugin.
-
-[More about offers](/discounts)
+It ensures all links have UTM tags, appending them if missing.
 
 ---
 
 ## Licenses & Pricing
 
-All versions available after purchase. 50% discount to upgrade for all customers.
-
-Read about [licenses and upgrades](https://www.mtcextendee.com/licenses/)
-
-### Single Customer License
-
-Perfect for companies that use Mautic directly.
-
-**$49/year**  
-[Buy now](http://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/single)
-
-### Small Agency License
-
-Ideally suited for small agencies with up to 10 customers.
-
-**$99/year**  
-[Buy now](http://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/small)
-
-### Unlimited SaaS Agency License
-
-Perfect for big agencies that use Mautic for their customers.
-
-**$199/year**  
-[Buy now](https://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/unlimited)
+- **Single Customer License:** $49/year  
+  [Buy now](http://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/single)
+- **Small Agency License:** $99/year  
+  [Buy now](http://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/small)
+- **Unlimited SaaS Agency License:** $199/year  
+  [Buy now](https://madesimple.madesimple.cloud/plugin/store/pay/auto-utm-tagger/unlimited)
 
 [Contact us if you have questions](/contact)
 
@@ -100,13 +117,3 @@ Perfect for big agencies that use Mautic for their customers.
 Built by [Kuzmany](https://kuzmany.biz/)
 
 ---
-
-- [How to install plugins](/how-to)
-- [Twig Templates snippets library](/mautic-twig-templates-bundle-snippets-library)
-- [Free Mautic Plugins directory](/free-mautic-plugins-directory)
-- [Changelog](/changelog)
-- [Upgrades Policy](/upgrades-policy)
-- [Affiliate Program](/affiliate)
-- [Discount Offers](/discounts)
-- [Contact & support](/contact)
-- [Twitter](https://twitter.com/mtcextendee)
