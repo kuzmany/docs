@@ -8,42 +8,34 @@ sidebarTitle: How to
 
 A simple guide to buy, install, or upgrade your Mautic Extendee plugins.
 
-### 1. Buy app directly from website
-
-All packages are from trusted Mautic community developers. We provide the best support within 24 hours.
-
-### 2. Receive download link, license key and install manually
-
-You will get a download link and license key after purchase. Install the package manually.
-
-### 3. Copy the plugin to `plugins/YourBundleName`
-
-Just copy the plugin folder to your Mautic `plugins/` directory.
-
-### 4. Clear cache
-
-Run:
-```
-php bin/console cache:clear
-```
-
-### 5. Refresh plugin list
-
-Run:
-```
-php bin/console mautic:plugins:reload
-```
-
-### 6. Refresh Mautic assets
-
-Run:
-```
-php bin/console mautic:assets:generate
-```
-
-### 7. It's done
-
-Enjoy your new plugin!
+<Steps>
+  <Step title="Buy app directly from website">
+    All packages are from trusted Mautic community developers.<br />
+    We provide the best support within 24 hours.
+  </Step>
+  <Step title="Receive download link, license key and install manually">
+    You will get a download link and license key after purchase.<br />
+    Install the package manually.
+  </Step>
+  <Step title="Copy the plugin to plugins/YourBundleName">
+    Just copy the plugin folder to your Mautic <code>plugins/</code> directory.
+  </Step>
+  <Step title="Clear cache">
+    Run:<br />
+    <code>php bin/console cache:clear</code>
+  </Step>
+  <Step title="Refresh plugin list">
+    Run:<br />
+    <code>php bin/console mautic:plugins:reload</code>
+  </Step>
+  <Step title="Refresh Mautic assets">
+    Run:<br />
+    <code>php bin/console mautic:assets:generate</code>
+  </Step>
+  <Step title="It's done">
+    Enjoy your new plugin!
+  </Step>
+</Steps>
 
 ---
 
