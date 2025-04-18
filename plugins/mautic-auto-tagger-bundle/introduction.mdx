@@ -8,25 +8,25 @@ Make UTM tagging easy and automatic for Mautic 4, 5, and 6.
 
 ---
 
-## What does this plugin do?
+## ✨ What does this plugin do?
 
-The Mautic Auto Tagger plugin adds UTM parameters and custom tags to your links in emails, dynamic content, and focus items. It can also fill in UTM tags for you when you create new emails or content. You can use simple tokens to add dynamic info, like the name of your email or campaign.
+The Mautic Auto Tagger plugin saves you time by adding UTM parameters and custom tags to your links in emails, dynamic content, and focus items. It can even fill in UTM tags for you when you create new emails or content. Use simple tokens to add info like the name of your email or campaign—no manual work needed!
 
 ---
 
-## Main Features
+## 🌟 Main Features
 
-- **Adds UTM tags automatically:** If your links don’t have UTM tags, the plugin adds them for you.
-- **Fills in UTM tags when you create new content:** Default UTM tags appear automatically when you make a new email, dynamic content, or focus item.
+- **Automatic UTM tags:** If your links don’t have UTM tags, the plugin adds them for you.
+- **Pre-filled UTM tags:** Default UTM tags appear automatically when you make a new email, dynamic content, or focus item.
 - **Custom tags:** Add your own key-value tags to links.
 - **Tokens:** Use tokens to insert info like email name, campaign ID, or contact fields.
 - **Transliteration:** Use `|transliterate` to make token values URL-safe.
-- **Set tags for each channel:** Choose different tags for Email, Dynamic Content, and Focus.
-- **Doesn’t overwrite existing UTM tags:** If a link already has UTM tags, the plugin leaves them alone.
+- **Channel-specific tags:** Choose different tags for Email, Dynamic Content, and Focus.
+- **No overwriting:** If a link already has UTM tags, the plugin leaves them alone.
 
 ---
 
-## How does it work?
+## ⚙️ How does it work?
 
 - **Automatic tagging:** When you send an email or use dynamic content, the plugin checks each link. If it doesn’t have UTM tags, it adds your default UTM tags and any custom tags you set. Tokens in tags are replaced with real values.
 - **Pre-filled tags:** When you create a new email, dynamic content, or focus item, the UTM tag fields are filled in for you.
@@ -35,7 +35,7 @@ The Mautic Auto Tagger plugin adds UTM parameters and custom tags to your links 
 
 ---
 
-## Using tokens
+## 🏷️ Using tokens
 
 Tokens let you add info from Mautic automatically to your tags.
 
@@ -52,7 +52,7 @@ Example: `{emailfield=name|transliterate}`
 
 ---
 
-## Example
+## 💡 Example
 
 1. **Set up:** In the plugin settings under "Tags for emails", set:
     - `utm_source`: `mautic`
@@ -67,7 +67,7 @@ Example: `{emailfield=name|transliterate}`
 
 ---
 
-## How to install
+## 🚀 How to install
 
 1. Copy the plugin to `plugins/MauticAutoTaggerBundle`
 2. Clear cache:  
@@ -79,7 +79,7 @@ Example: `{emailfield=name|transliterate}`
 
 ---
 
-## FAQ
+## ❓ FAQ
 
 ### Can I personalize my UTM tags?
 
