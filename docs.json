@@ -49,6 +49,7 @@
         "pages": [
           "homepage",
           "how-to",
+          "faq",
           "upgrades-policy",
           "changelog"
         ]
