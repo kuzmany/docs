@@ -1,0 +1,74 @@
+---
+description: API endpoints for the Multiple Transport Plugin.
+---
+
+## API Reference
+
+You can manage transports, assign them to emails or users, and test sending via the API.
+
+### List All Transports
+
+```
+GET /api/multipleTransports
+```
+
+Returns a list of all transport configurations.
+
+### Get a Single Transport
+
+```
+GET /api/multipleTransports/{id}
+```
+
+Returns details for a specific transport.
+
+### Create a New Transport
+
+```
+POST /api/multipleTransports/new
+```
+
+Send a JSON body with fields like `name`, `description`, `mailerDsn`, `testedEmailFrom`, `isPublished`.
+
+### Update a Transport
+
+```
+PATCH /api/multipleTransports/{id}/edit
+```
+
+Send a JSON body with the fields you want to update.
+
+### Delete a Transport
+
+```
+DELETE /api/multipleTransports/{id}/delete
+```
+
+Deletes a transport.
+
+### Assign Transport to Email
+
+```
+POST /api/multipleTransport/transportEmail/{emailId}
+```
+
+Parameters:
+- `transportId`: ID of the transport to use
+- `useOwnerTransport`: true/false
+
+### Assign Transport to User
+
+```
+POST /api/multipleTransport/transportUser/{userId}
+```
+
+Parameter:
+- `transportId`: ID of the transport to use
+
+### Test a Transport
+
+```
+POST /api/multipleTransports/send/test/{id}
+```
+
+Sends a test email using the selected transport.
