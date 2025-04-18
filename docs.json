@@ -82,6 +82,12 @@
         "pages": [
           "plugins/mautic-customizer/introduction"
         ]
+      },
+      {
+        "tab": "Auto Tagger Plugin",
+        "pages": [
+          "plugins/mautic-auto-tagger-bundle/introduction"
+        ]
       }
     ]
   },
