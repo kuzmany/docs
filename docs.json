@@ -17,7 +17,7 @@
   "modeToggle": {
     "default": "dark"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "styling": {
     "eyebrows": "breadcrumbs",
     "headings": {
