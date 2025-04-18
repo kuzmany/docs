@@ -55,6 +55,12 @@
         ]
       },
       {
+        "tab": "Multiple Transport Plugin",
+        "pages": [
+          "plugins/mautic-multiple-transport-bundle/introduction"
+        ]
+      },
+      {
         "tab": "Twig Templates Plugin",
         "pages": [
           "twig-templates/introduction",
@@ -72,12 +78,6 @@
         "tab": "Customizer Plugin",
         "pages": [
           "plugins/mautic-customizer/introduction"
-        ]
-      },
-      {
-        "tab": "Multiple Transport Plugin",
-        "pages": [
-          "plugins/mautic-multiple-transport-bundle/introduction"
         ]
       }
     ]
