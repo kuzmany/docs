@@ -73,6 +73,12 @@
         "pages": [
           "plugins/mautic-customizer/introduction"
         ]
+      },
+      {
+        "tab": "Multiple Transport Plugin",
+        "pages": [
+          "plugins/mautic-multiple-transport-bundle/introduction"
+        ]
       }
     ]
   },
